@@ -7,11 +7,12 @@ import { MaterialSelect } from './MaterialSelect';
 
 const App: Component = () => {
   const [score, setScore] = createSignal(0)
+  const [selectedMaterial, setSelectedMaterial] = createSignal<string>()
 
   return (
     <main class={styles.App}>
-      <PlayingField score={score()}/>
-      <MaterialSelect />
+      <PlayingField score={score()} selectedMaterial={selectedMaterial} />
+      <MaterialSelect selectedMaterial={selectedMaterial} setSelectedMaterial={setSelectedMaterial}/>
     </main>
   );
 };
