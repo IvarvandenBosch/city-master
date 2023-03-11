@@ -1,0 +1,85 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  display: flex;
+
+}
+
+.rows {
+  display: flex;
+}
+
+
+
+.cols {
+  height: 40px;
+  outline: black 1px;
+  width: 40px;
+  aspect-ratio: 1/1;
+  background-color: #111111;
+  background-size: 100% 100%;
+}
+
+.material-select {
+  width: 40px;
+  height: 40px;
+  background-size: 100% 100%;
+  border: 0;
+  background-color: transparent;
+}
+
+.material-select {
+  cursor: pointer;
+}
+
+.material-list {
+  background-color: #a3a3a385;
+  padding: 10px;
+}
+
+.grass {
+  background-image: url(../GameAssets/grass.png);
+}
+.water {
+  background-image: url(../GameAssets/water.png);
+}
+.road-h {
+  background-image: url(../GameAssets/road-h.png);
+}
+.road-v {
+  background-image: url(../GameAssets/road-v.png);
+}
+.road-Ld {
+  background-image: url(../GameAssets/road-Ld.png);
+}
+.road-Rd {
+  background-image: url(../GameAssets/road-Rd.png);
+}
+.road-Ul {
+  background-image: url(../GameAssets/road-Ul.png);
+}
+.road-Ur {
+  background-image: url(../GameAssets/road-Ur.png);
+}
+.house-1 {
+  background-image: url(../GameAssets/house-1.png);
+}
+.house-2 {
+  background-image: url(../GameAssets/house-2.png);
+}
+.house-3 {
+  background-image: url(../GameAssets/house-3.png);
+}
+.shop {
+  background-image: url(../GameAssets/shop.png);
+}
+
+.rotated90 {
+  rotate: 90deg;
+}
+
+/* More assets later to be implemented */
