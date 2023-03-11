@@ -3,7 +3,7 @@ import { Component, createSignal } from "solid-js"
 
 export const MaterialSelect: Component = (props) => {
     const materials = [
-        "grass", "house-1", "house-2", "house-3", "shop", "water", "road-h", "road-v", "road-Ld", "road-Rd", "road-Ul", "road-Ur"
+        "grass", "house-1", "house-2", "house-3", "shop", "water", "road-h", "road-v", "road-Ld", "road-Rd", "road-Ul", "road-Ur", "sand"
     ] 
 
     return (

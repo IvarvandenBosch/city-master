@@ -15,15 +15,16 @@ export const PlayingField: Component = (props) => {
     }
 
     return (
-        <div class="grid">{fieldGrid().map((rows: any, rowIdx: number) => {
-            return (
-                <div class="rows">
-                    {rows.map((cols: any, colIdx: number) => {
-                        return (<div onClick={() => fieldMutation(rowIdx, colIdx)} class={"cols" + " " + cols}></div>)
-                    })}
-                </div>
-            )
-        })}
+        <div class="grid">{
+            fieldGrid().map((rows: any, rowIdx: number) => {
+                return (
+                    <div class="rows">
+                        {rows.map((cols: any, colIdx: number) => {
+                            return (<div onClick={() => fieldMutation(rowIdx, colIdx)} class={"cols" + " " + cols}></div>)
+                        })}
+                    </div>
+                )
+            })}
         </div>
     )
 }
