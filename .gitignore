@@ -3,6 +3,7 @@ logs
 *.log
 npm-debug.log*
 
+
 # Runtime data
 pids
 *.pid
@@ -63,3 +64,6 @@ test/types/index.js
 
 # compiled app
 dist
+
+# config
+.config.json
