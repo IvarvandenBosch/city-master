@@ -1,26 +1,19 @@
-import type { Component } from 'solid-js';
+import { Component, createSignal } from 'solid-js';
+import { PlayingField } from './PlayingField';
 
-import logo from './logo.svg';
+// styling
 import styles from './App.module.css';
+import { MaterialSelect } from './MaterialSelect';
 
 const App: Component = () => {
+  const [score, setScore] = createSignal(0)
+  const [selectedMaterial, setSelectedMaterial] = createSignal<string>()
+
   return (
-    <div class={styles.App}>
-      <header class={styles.header}>
-        <img src={logo} class={styles.logo} alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          class={styles.link}
-          href="https://github.com/solidjs/solid"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn Solid
-        </a>
-      </header>
-    </div>
+    <main class={styles.App}>
+      <PlayingField score={score()} selectedMaterial={selectedMaterial} />
+      <MaterialSelect selectedMaterial={selectedMaterial} setSelectedMaterial={setSelectedMaterial}/>
+    </main>
   );
 };
 
