@@ -17,6 +17,7 @@ export const MaterialSelect: Component<{
     "road-Rd",
     "road-Ul",
     "road-Ur",
+    "sand"
   ];
 
   return (
