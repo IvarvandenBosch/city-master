@@ -1,6 +1,9 @@
 import { Component, createSignal, createEffect } from "solid-js";
 
-export const PlayingField: Component = (props) => {
+export const PlayingField:  Component<{
+    selectedMaterial: Function;
+    setSelectedMaterial: Function;
+  }>  = (props) => {
     const gridSize = {
         rows: 25,
         cols: 25
@@ -9,6 +12,10 @@ export const PlayingField: Component = (props) => {
     const [fieldGrid, setFieldGrid] = createSignal(Array.from({ length: gridSize.rows }, () => Array.from({ length: gridSize.cols }, () => "grass")))
 
     function fieldMutation(row: number, col: number ) {
+        if (props.selectedMaterial() === undefined || fieldGrid()[row][col] === props.selectedMaterial()) {
+            return
+        }
+
         let newGrid = [...fieldGrid()]
         newGrid[row][col] = `${props.selectedMaterial()}`
         setFieldGrid([...newGrid])
@@ -69,7 +76,6 @@ export const PlayingField: Component = (props) => {
         })
         console.log(calculateScore(grass, roads, shops, houses))
     }, [fieldGrid])
-
     
     return (
         <div class="grid">{
