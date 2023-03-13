@@ -1,23 +1,37 @@
 import { Component, createSignal, createEffect } from "solid-js";
 
-export const PlayingField:  Component<{
+type playingFieldT = {
     selectedMaterial: Function;
     setSelectedMaterial: Function;
-  }>  = (props) => {
+    score: number;
+    setScore: Function;
+};
+
+
+export const PlayingField:  Component<playingFieldT> = (props) => {
     const gridSize = {
         rows: 25,
         cols: 25
     }
 
-    const [fieldGrid, setFieldGrid] = createSignal(Array.from({ length: gridSize.rows }, () => Array.from({ length: gridSize.cols }, () => "grass")))
+    const grassObject = {name: "grass", price: 10}
+
+    const [fieldGrid, setFieldGrid] = createSignal(Array.from({ length: gridSize.rows }, () => Array.from({ length: gridSize.cols }, () => grassObject)))
 
     function fieldMutation(row: number, col: number ) {
-        if (props.selectedMaterial() === undefined || fieldGrid()[row][col] === props.selectedMaterial()) {
+        if (props.selectedMaterial().name === undefined || fieldGrid()[row][col].name === props.selectedMaterial().name) {
             return
         }
 
+        if (props.score - props.selectedMaterial().price >= 0) {
+            props.setScore((prevScore: number) => prevScore - props.selectedMaterial().price)
+        } else {
+            return
+        }
+        
         let newGrid = [...fieldGrid()]
-        newGrid[row][col] = `${props.selectedMaterial()}`
+        console.log(props.selectedMaterial())
+        newGrid[row][col] = props.selectedMaterial()
         setFieldGrid([...newGrid])
     }
 
@@ -59,23 +73,33 @@ export const PlayingField:  Component<{
         roads = 0
         shops = 0
 
-        fieldGrid().flat().forEach((str, idx) => {
+        fieldGrid().flat().forEach((mat) => {
             
         const houseArray = ["house-1", "house-2", "house-3"]
         const roadsArray = ["road-h","road-v","road-Ld","road-Rd","road-Ul","road-Ur"]
         
-        if (str === "grass") {
+        if (mat.name === "grass") {
             grass += 1
-        } else if (houseArray.includes(str)) {
+        } else if (houseArray.includes(mat.name)) {
             houses += 1
-        } else if (roadsArray.includes(str)) {
+        } else if (roadsArray.includes(mat.name)) {
             roads += 1
-        } else if (str === "shop") {
+        } else if (mat.name === "shop") {
             shops += 1
         }
         })
-        console.log(calculateScore(grass, roads, shops, houses))
     }, [fieldGrid])
+
+    createEffect(() => {
+        const interval = setInterval(function() {
+            props.setScore((prevScore: number) => prevScore + calculateScore(grass, roads, shops, houses))
+            console.log(props.score)
+
+            return () => {
+                clearInterval(interval)
+            }
+        }, 5000);
+    }, []);
     
     return (
         <div class="grid">{
@@ -83,7 +107,7 @@ export const PlayingField:  Component<{
                 return (
                     <div class="rows">
                         {rows.map((cols: any, colIdx: number) => {
-                            return (<div onClick={() => fieldMutation(rowIdx, colIdx)} class={"cols" + " " + cols}></div>)
+                            return (<div onClick={() => fieldMutation(rowIdx, colIdx)} class={"cols" + " " + `${cols.name}`}></div>)
                         })}
                     </div>
                 )

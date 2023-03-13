@@ -10,10 +10,13 @@ const App: Component = () => {
   const [selectedMaterial, setSelectedMaterial] = createSignal<string>()
 
   return (
-    <main class={styles.App}>
-      <PlayingField score={score()} selectedMaterial={selectedMaterial} />
-      <MaterialSelect selectedMaterial={selectedMaterial} setSelectedMaterial={setSelectedMaterial}/>
-    </main>
+    <>
+      <nav>Score: {score()}</nav>
+      <main class={styles.App}>
+        <PlayingField score={score()} setScore={setScore} selectedMaterial={selectedMaterial} setSelectedMaterial={setSelectedMaterial} />
+        <MaterialSelect score={score()} setScore={setScore} selectedMaterial={selectedMaterial} setSelectedMaterial={setSelectedMaterial}/>
+      </main>
+    </>
   );
 };
 

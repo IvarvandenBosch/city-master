@@ -22,6 +22,11 @@ main {
   aspect-ratio: 1/1;
   background-color: #111111;
   background-size: 100% 100%;
+  cursor: pointer;
+}
+
+.cols:hover {
+  filter: brightness(50%);
 }
 
 .material-select {
@@ -30,6 +35,12 @@ main {
   background-size: 100% 100%;
   border: 0;
   background-color: transparent;
+  z-index: -1;
+}
+
+.flex {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .material-select {
@@ -39,6 +50,12 @@ main {
 .material-list {
   background-color: #a3a3a385;
   padding: 10px;
+}
+
+.selected {
+  outline: solid blue 2px;
+  z-index: 1;
+  position: relative;
 }
 
 .grass {

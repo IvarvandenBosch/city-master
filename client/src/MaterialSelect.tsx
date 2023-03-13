@@ -1,41 +1,50 @@
 import { Component, createSignal } from "solid-js";
 
-export const MaterialSelect: Component<{
+type matSelectT = {
   selectedMaterial: Function;
   setSelectedMaterial: Function;
-}> = (props) => {
+  score: number;
+  setScore: Function;
+};
+
+
+export const MaterialSelect: Component<matSelectT> = (props) => {
   const materials = [
-    "grass",
-    "house-1",
-    "house-2",
-    "house-3",
-    "shop",
-    "water",
-    "road-h",
-    "road-v",
-    "road-Ld",
-    "road-Rd",
-    "road-Ul",
-    "road-Ur",
-    "sand"
-  ];
+    {name: "grass", price: 10},
+    {name: "house-1", price: 500},
+    {name: "house-2", price: 500},
+    {name: "house-3", price: 500},
+    {name: "shop", price: 1000},
+    {name: "water", price: 10},
+    {name: "road-h", price: 100},
+    {name: "road-v", price: 100},
+    {name: "road-Ld", price: 100},
+    {name: "road-Rd", price: 100},
+    {name: "road-Ul", price: 100},
+    {name: "road-Ur", price: 100},
+    {name: "sand", price: 10}
+];
+
 
   return (
     <aside class="material-list">
       <h1>Materials</h1>
       <h3>{props.selectedMaterial() ?? "Select a material"}</h3>
-      {materials.map((material, idx) => {
-        return (
-          <button
-            onClick={() => props.setSelectedMaterial(material)}
-            style={{
-              outline:
-                material === props.selectedMaterial() ? "solid blue 2px" : "",
-            }}
-            class={"material-select" + " " + material}
-          ></button>
-        );
-      })}
+      <div class="flex">
+        {materials.map((material, idx) => {
+          return (
+            <>
+            <section>
+              <button
+                onClick={() => props.setSelectedMaterial(material)}
+                class={material.name === props.selectedMaterial()?.name ? ("selected" + " " + "material-select" + " " + material.name) : ("material-select" + " " + material.name) }
+              ></button>
+              <p>{material.price}</p>
+            </section>
+            </>
+          );
+        })}
+      </div>
     </aside>
   );
 };
