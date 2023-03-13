@@ -97,6 +97,9 @@ main {
 .sand {
   background-image: url(../GameAssets/sand.png);
 }
+.road-Ulr {
+  background-image: url(../GameAssets/road-Ulr.png);
+}
 
 .rotated90 {
   rotate: 90deg;

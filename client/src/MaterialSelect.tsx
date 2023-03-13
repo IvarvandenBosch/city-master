@@ -22,6 +22,7 @@ export const MaterialSelect: Component<matSelectT> = (props) => {
     {name: "road-Rd", price: 100},
     {name: "road-Ul", price: 100},
     {name: "road-Ur", price: 100},
+    {name: "road-Ulr", price: 100},
     {name: "sand", price: 10}
 ];
 

@@ -76,7 +76,7 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
         fieldGrid().flat().forEach((mat) => {
             
         const houseArray = ["house-1", "house-2", "house-3"]
-        const roadsArray = ["road-h","road-v","road-Ld","road-Rd","road-Ul","road-Ur"]
+        const roadsArray = ["road-h","road-v","road-Ld","road-Rd","road-Ul","road-Ur", "road-Ulr"]
         
         if (mat.name === "grass") {
             grass += 1
