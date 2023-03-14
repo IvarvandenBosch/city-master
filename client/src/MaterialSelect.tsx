@@ -27,7 +27,7 @@ export const MaterialSelect: Component<matSelectT> = (props) => {
   return (
     <aside class="material-list">
       <h1>Materials</h1>
-      <h3>{props.selectedMaterial().name ?? "Select a material"}</h3>
+      <h3>{props.selectedMaterial()?.name ?? "Select a material" }</h3>
       <div class="flex">
         {materials.map((material, idx) => {
           return (

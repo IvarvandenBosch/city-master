@@ -16,7 +16,7 @@ const App: Component = () => {
       <main class={styles.App}>
         <PlayingField score={score()} setScore={setScore} selectedMaterial={selectedMaterial} setSelectedMaterial={setSelectedMaterial} />
         <MaterialSelect score={score()} setScore={setScore} selectedMaterial={selectedMaterial} setSelectedMaterial={setSelectedMaterial}/>
-        <UserInterface selectedMaterial={selectedMaterial} setSelectedMaterial={setSelectedMaterial} />
+        <UserInterface score={score()} setScore={setScore} selectedMaterial={selectedMaterial} setSelectedMaterial={setSelectedMaterial} />
       </main>
     </>
   );

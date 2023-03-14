@@ -3,6 +3,8 @@ import { Component } from "solid-js";
 type userInterfaceT = {
     selectedMaterial: Function;
     setSelectedMaterial: Function;
+    score: number;
+    setScore: Function;
 }
 
 export const UserInterface: Component<userInterfaceT>  = (props) => {
@@ -28,6 +30,7 @@ export const UserInterface: Component<userInterfaceT>  = (props) => {
             <p>Rotate: {`(${props.selectedMaterial()?.rotation ? props.selectedMaterial().rotation : 0} degrees)`}</p>
             <button class="backward" onClick={() => incDecDegreees("dec")}>-90 degrees</button>
             <button class="forward" onClick={() => incDecDegreees("inc")}>+90 degrees</button>
+            <button onClick={() => props.setScore((prevScore: number) => prevScore + 200)}>Cheat code (+ 200 score)</button>
         </div>
     )
 }

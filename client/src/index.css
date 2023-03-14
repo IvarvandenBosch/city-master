@@ -88,6 +88,24 @@ main {
 .sand {
   background-image: url(../GameAssets/sand.png);
 }
+.sand-house-1 {
+  background-image: url(../GameAssets/sand-house-1.png);
+}
+.sand-house-2 {
+  background-image: url(../GameAssets/sand-house-2.png);
+}
+.sand-house-3 {
+  background-image: url(../GameAssets/sand-house-3.png);
+}
+.sand-shop {
+  background-image: url(../GameAssets/sand-shop.png);
+}
+.sand {
+  background-image: url(../GameAssets/sand.png);
+}
+.sand-road-Ld {
+  background-image: url(../GameAssets/sand-road-Ld.png);
+}
 .road-fourway {
   background-image: url(../GameAssets/road-fourway.png);
 }

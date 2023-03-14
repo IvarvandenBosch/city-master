@@ -29,7 +29,37 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
             return
         }
         
-        let newGrid = [...fieldGrid()]
+    let newGrid = [...fieldGrid()]
+    
+    const surroundingsArray = [  newGrid[row - 1] && newGrid[row - 1][col],
+        newGrid[row + 1] && newGrid[row + 1][col],
+        newGrid[row] && newGrid[row][col - 1],
+        newGrid[row] && newGrid[row][col + 1]
+    ]
+    
+    const grassSurrounded = ["house-1", "house-2", "house-3", "shop", "road-Ld"]
+      
+    if (grassSurrounded.includes(props.selectedMaterial().name)) {
+        let sandCount = 0
+
+        surroundingsArray.forEach(surroundingCell => {
+          if (surroundingCell && (surroundingCell.name === "sand" || surroundingCell.name.startsWith("sand-"))) {
+            sandCount += 1
+          }
+        })
+        
+        if (sandCount >= 3) {
+          props.setSelectedMaterial({
+            ...props.selectedMaterial(),
+            name: `sand-${props.selectedMaterial().name}`
+          })
+        }
+    }
+      
+      
+      
+      
+
         console.log(props.selectedMaterial())
         newGrid[row][col] = props.selectedMaterial()
         setFieldGrid([...newGrid])
