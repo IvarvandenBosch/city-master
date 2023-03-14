@@ -14,7 +14,7 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
         cols: 25
     }
 
-    const grassObject = {name: "grass", price: 10}
+    const grassObject = {name: "grass", price: 10, rotation: 0}
 
     const [fieldGrid, setFieldGrid] = createSignal(Array.from({ length: gridSize.rows }, () => Array.from({ length: gridSize.cols }, () => grassObject)))
 
@@ -107,7 +107,10 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
                 return (
                     <div class="rows">
                         {rows.map((cols: any, colIdx: number) => {
-                            return (<div onClick={() => fieldMutation(rowIdx, colIdx)} class={"cols" + " " + `${cols.name}`}></div>)
+                            return (<div style={{
+                                rotate: cols.rotation + "deg"
+                            }}
+                            onClick={() => fieldMutation(rowIdx, colIdx)} class={"cols" + " " + `${cols.name}`}></div>)
                         })}
                     </div>
                 )

@@ -4,6 +4,7 @@ import { PlayingField } from './PlayingField';
 // styling
 import styles from './App.module.css';
 import { MaterialSelect } from './MaterialSelect';
+import { UserInterface } from './UserInterface';
 
 const App: Component = () => {
   const [score, setScore] = createSignal(0)
@@ -15,6 +16,7 @@ const App: Component = () => {
       <main class={styles.App}>
         <PlayingField score={score()} setScore={setScore} selectedMaterial={selectedMaterial} setSelectedMaterial={setSelectedMaterial} />
         <MaterialSelect score={score()} setScore={setScore} selectedMaterial={selectedMaterial} setSelectedMaterial={setSelectedMaterial}/>
+        <UserInterface selectedMaterial={selectedMaterial} setSelectedMaterial={setSelectedMaterial} />
       </main>
     </>
   );
