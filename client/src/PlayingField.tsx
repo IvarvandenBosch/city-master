@@ -19,7 +19,7 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
     const [fieldGrid, setFieldGrid] = createSignal(Array.from({ length: gridSize.rows }, () => Array.from({ length: gridSize.cols }, () => grassObject)))
 
     function fieldMutation(row: number, col: number ) {
-        if (props.selectedMaterial().name === undefined || fieldGrid()[row][col].name === props.selectedMaterial().name) {
+        if (props.selectedMaterial().name === undefined || fieldGrid()[row][col].name === props.selectedMaterial().name && fieldGrid()[row][col].rotation === props.selectedMaterial().rotation) {
             return
         }
 
