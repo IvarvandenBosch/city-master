@@ -67,3 +67,7 @@ dist
 
 # config
 .config.json
+
+#secrets
+.env
+server/.env

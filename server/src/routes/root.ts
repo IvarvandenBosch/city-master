@@ -8,6 +8,7 @@ const root: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
       version: process.env.VERSION,
       port: process.env.PORT,
       enviroment: process.env.ENVIROMENT,
+      protocol: process.env.PROTOCOL,
     };
   });
 };

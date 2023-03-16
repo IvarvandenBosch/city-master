@@ -12,5 +12,6 @@ test("default root route", async (t) => {
     version: process.env.VERSION,
     port: process.env.PORT,
     enviroment: process.env.ENVIROMENT,
+    protocol: process.env.PROTOCOL,
   });
 });
