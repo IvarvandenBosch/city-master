@@ -52,10 +52,29 @@ main {
   padding: 10px;
 }
 
+.material-list h3 {
+  text-transform: capitalize;
+}
+
 .selected {
   outline: solid blue 2px;
   z-index: 1;
   position: relative;
+}
+
+.rotate {
+  border: solid 1px black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  cursor: pointer;
+}
+
+button {
+  border: solid 1px black;
+  padding: 3px;
+  cursor: pointer;
 }
 
 .grass {

@@ -15,52 +15,58 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
     }
 
     const grassObject = {name: "grass", price: 10, rotation: 0}
-
     const [fieldGrid, setFieldGrid] = createSignal(Array.from({ length: gridSize.rows }, () => Array.from({ length: gridSize.cols }, () => grassObject)))
+
+    // Check if user Is currently on the webpage
+    let insideDocument = true
+    document.addEventListener("visibilitychange", function handleVisibilityChange() {
+        if (document.hidden) {
+          insideDocument = false
+          console.log(insideDocument)
+        } else {
+            insideDocument = true
+            console.log(insideDocument)
+        }
+    }, false);
 
     function fieldMutation(row: number, col: number ) {
         if (props.selectedMaterial().name === undefined || fieldGrid()[row][col].name === props.selectedMaterial().name && fieldGrid()[row][col].rotation === props.selectedMaterial().rotation) {
             return
         }
-
         if (props.score - props.selectedMaterial().price >= 0) {
             props.setScore((prevScore: number) => prevScore - props.selectedMaterial().price)
         } else {
             return
         }
         
-    let newGrid = [...fieldGrid()]
-    
-    const surroundingsArray = [  newGrid[row - 1] && newGrid[row - 1][col],
-        newGrid[row + 1] && newGrid[row + 1][col],
-        newGrid[row] && newGrid[row][col - 1],
-        newGrid[row] && newGrid[row][col + 1]
-    ]
-    
-    const grassSurrounded = ["house-1", "house-2", "house-3", "shop", "road-Ld"]
-      
-    if (grassSurrounded.includes(props.selectedMaterial().name)) {
-        let sandCount = 0
-
-        surroundingsArray.forEach(surroundingCell => {
-          if (surroundingCell && (surroundingCell.name === "sand" || surroundingCell.name.startsWith("sand-"))) {
-            sandCount += 1
-          }
-        })
+        let newGrid = [...fieldGrid()]
         
-        if (sandCount >= 3) {
-          props.setSelectedMaterial({
-            ...props.selectedMaterial(),
-            name: `sand-${props.selectedMaterial().name}`
-          })
-        }
-    }
-      
-      
-      
-      
+        const surroundingsArray = [newGrid[row - 1] && newGrid[row - 1][col],
+            newGrid[row + 1] && newGrid[row + 1][col],
+            newGrid[row] && newGrid[row][col - 1],
+            newGrid[row] && newGrid[row][col + 1]
+        ]
 
-        console.log(props.selectedMaterial())
+        // Materials that have grass in them, but also other things
+        const grassSurrounded = ["house-1", "house-2", "house-3", "shop", "road-Ld"]
+
+        if (grassSurrounded.includes(props.selectedMaterial().name)) {
+            let sandCount = 0
+
+            surroundingsArray.forEach(surroundingCell => {
+              if (surroundingCell && (surroundingCell.name === "sand" || surroundingCell.name.startsWith("sand-"))) {
+                sandCount += 1
+              }
+            })
+
+            if (sandCount >= 3) {
+              props.setSelectedMaterial({
+                ...props.selectedMaterial(),
+                name: `sand-${props.selectedMaterial().name}`
+              })
+            }
+        }
+
         newGrid[row][col] = props.selectedMaterial()
         setFieldGrid([...newGrid])
     }
@@ -120,11 +126,12 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
         })
     }, [fieldGrid])
 
+    // Receive money every 5 seconds
     createEffect(() => {
         const interval = setInterval(function() {
-            props.setScore((prevScore: number) => prevScore + calculateScore(grass, roads, shops, houses))
-            console.log(props.score)
-
+            if (insideDocument) {
+                props.setScore((prevScore: number) => prevScore + calculateScore(grass, roads, shops, houses))
+            }
             return () => {
                 clearInterval(interval)
             }
