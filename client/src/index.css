@@ -22,6 +22,11 @@ main {
   aspect-ratio: 1/1;
   background-color: #111111;
   background-size: 100% 100%;
+  cursor: pointer;
+}
+
+.cols:hover {
+  filter: brightness(50%);
 }
 
 .material-select {
@@ -30,6 +35,12 @@ main {
   background-size: 100% 100%;
   border: 0;
   background-color: transparent;
+  z-index: -1;
+}
+
+.flex {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .material-select {
@@ -41,6 +52,31 @@ main {
   padding: 10px;
 }
 
+.material-list h3 {
+  text-transform: capitalize;
+}
+
+.selected {
+  outline: solid blue 2px;
+  z-index: 1;
+  position: relative;
+}
+
+.rotate {
+  border: solid 1px black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  cursor: pointer;
+}
+
+button {
+  border: solid 1px black;
+  padding: 3px;
+  cursor: pointer;
+}
+
 .grass {
   background-image: url(../GameAssets/grass.png);
 }
@@ -50,20 +86,11 @@ main {
 .road-h {
   background-image: url(../GameAssets/road-h.png);
 }
-.road-v {
-  background-image: url(../GameAssets/road-v.png);
-}
 .road-Ld {
   background-image: url(../GameAssets/road-Ld.png);
 }
-.road-Rd {
-  background-image: url(../GameAssets/road-Rd.png);
-}
-.road-Ul {
-  background-image: url(../GameAssets/road-Ul.png);
-}
-.road-Ur {
-  background-image: url(../GameAssets/road-Ur.png);
+.road-Ulr {
+  background-image: url(../GameAssets/road-Ulr.png);
 }
 .house-1 {
   background-image: url(../GameAssets/house-1.png);
@@ -77,9 +104,29 @@ main {
 .shop {
   background-image: url(../GameAssets/shop.png);
 }
-
-.rotated90 {
-  rotate: 90deg;
+.sand {
+  background-image: url(../GameAssets/sand.png);
+}
+.sand-house-1 {
+  background-image: url(../GameAssets/sand-house-1.png);
+}
+.sand-house-2 {
+  background-image: url(../GameAssets/sand-house-2.png);
+}
+.sand-house-3 {
+  background-image: url(../GameAssets/sand-house-3.png);
+}
+.sand-shop {
+  background-image: url(../GameAssets/sand-shop.png);
+}
+.sand {
+  background-image: url(../GameAssets/sand.png);
+}
+.sand-road-Ld {
+  background-image: url(../GameAssets/sand-road-Ld.png);
+}   
+.road-fourway {
+  background-image: url(../GameAssets/road-fourway.png);
 }
 
 /* More assets later to be implemented */
