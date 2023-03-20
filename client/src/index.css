@@ -128,5 +128,28 @@ button {
 .road-fourway {
   background-image: url(../GameAssets/road-fourway.png);
 }
+.broken.road-h {
+  background-image: url(../GameAssets/cracked-road-h.png);
+}
+.broken.road-Ulr {
+  background-image: url(../GameAssets/broken-road-Ulr.png);
+}
+.broken.road-Ld {
+  background-image: url(../GameAssets/broken-road-Ld.png);
+}
+.broken.sand-road-Ld {
+  background-image: url(../GameAssets/broken-sand-road-Ld.png);
+}
+.broken.road-fourway {
+  background-image: url(../GameAssets/broken-fourway.png);
+}
+.broken.grass {
+  background-image: url(../GameAssets/comet-grass.png);
+}
+.broken.water {
+  background-image: url(../GameAssets/polluted-water.png);
+}
+
+
 
 /* More assets later to be implemented */

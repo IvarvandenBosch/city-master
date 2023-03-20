@@ -27,6 +27,12 @@ export const UserInterface: Component<userInterfaceT>  = (props) => {
     //     props.setSelectedMaterial({...material})
     // }
 
+    window.addEventListener("keypress", (event) => {
+        if (event.key === "r") {
+            rotate()
+        }
+    });
+
     function rotate() {
         if (!props.selectedMaterial()){return}
         let material = {...props.selectedMaterial()}
@@ -49,7 +55,7 @@ export const UserInterface: Component<userInterfaceT>  = (props) => {
     return (
         <div class="ui">
             <p>Rotate: {`(${props.selectedMaterial()?.rotation ? props.selectedMaterial().rotation : 0} degrees)`}</p>
-            <button class="rotate" onClick={() => rotate()}><FaSolidArrowRotateRight /></button>
+            <button class="rotate" onClick={() => rotate()} title="press 'r'"><FaSolidArrowRotateRight /></button>
             <button onClick={() => props.setScore((prevScore: number) => prevScore + 200)}>Cheat code (+ 200 score)</button>
         </div>
     )

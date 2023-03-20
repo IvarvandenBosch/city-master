@@ -14,32 +14,73 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
         cols: 25
     }
 
-    const grassObject = {name: "grass", price: 10, rotation: 0}
+
+    const grassObject = {name: "grass", price: 10, rotation: 0, broken: false}
     const [fieldGrid, setFieldGrid] = createSignal(Array.from({ length: gridSize.rows }, () => Array.from({ length: gridSize.cols }, () => grassObject)))
+    const [displayList, setDisplayList] = createSignal<string[]>([])
 
     // Check if user Is currently on the webpage
     let insideDocument = true
     document.addEventListener("visibilitychange", function handleVisibilityChange() {
         if (document.hidden) {
           insideDocument = false
-          console.log(insideDocument)
         } else {
             insideDocument = true
-            console.log(insideDocument)
         }
     }, false);
 
-    function fieldMutation(row: number, col: number ) {
-        if (props.selectedMaterial().name === undefined || fieldGrid()[row][col].name === props.selectedMaterial().name && fieldGrid()[row][col].rotation === props.selectedMaterial().rotation) {
+    function addToDisplay(row: number | undefined, col: number | undefined, key: string, value: undefined | number) {
+        let newDisplayList = [...displayList()]
+        if (typeof row === 'number' && typeof col === 'number') {    
+            if (key === 'add') {
+                newDisplayList.push(`+${fieldGrid()[row][col].price * 0.5} [SOLD]`);
+            } else if (key === 'subtract') {
+                newDisplayList.push(`-${props.selectedMaterial().price} [BOUGHT]`);
+            }
+        }
+        
+        if (!row && !col && value) {
+            if (key === 'add') {
+                newDisplayList.push(`+${value}`);
+            } else if (key === 'subtract') {
+                newDisplayList.push(`-${value}`);
+            }
+        }
+ 
+        if (newDisplayList.length > 3) {
+            newDisplayList.shift()
+        }
+            
+
+        setDisplayList(newDisplayList)
+    }
+
+    let colRef: HTMLDivElement | ((el: HTMLDivElement) => void); 
+
+    function fieldMutation(row: number, col: number, event: MouseEvent & { currentTarget: HTMLDivElement; target: Element; }) {
+        let newGrid = [...fieldGrid()]
+        
+        if (newGrid[row][col].broken) {
+            newGrid[row][col].broken = false
+            props.setScore((prevScore: number) => prevScore + 30)
+            addToDisplay(undefined, undefined, 'add', 30)
+            event.target.classList.remove("broken")
+        }
+
+        if (props.selectedMaterial() === undefined || fieldGrid()[row][col].name === props.selectedMaterial().name && fieldGrid()[row][col].rotation === props.selectedMaterial().rotation) {
             return
         }
+
+
         if (props.score - props.selectedMaterial().price >= 0) {
+            props.setScore((prevScore: number) => prevScore + (fieldGrid()[row][col].price * 0.5))
+            addToDisplay(row, col, 'add', undefined)
             props.setScore((prevScore: number) => prevScore - props.selectedMaterial().price)
+            addToDisplay(row, col, 'subtract', undefined)
         } else {
             return
         }
         
-        let newGrid = [...fieldGrid()]
         
         const surroundingsArray = [newGrid[row - 1] && newGrid[row - 1][col],
             newGrid[row + 1] && newGrid[row + 1][col],
@@ -59,17 +100,59 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
               }
             })
 
-            if (sandCount >= 3) {
-              props.setSelectedMaterial({
-                ...props.selectedMaterial(),
-                name: `sand-${props.selectedMaterial().name}`
-              })
+            if (sandCount >= 3 || newGrid[row][col].name === 'sand') {
+                newGrid[row][col] = {
+                    ...props.selectedMaterial(),
+                    name: `sand-${props.selectedMaterial().name}`
+                }
+                
+            } else {
+                newGrid[row][col] = props.selectedMaterial()
+            } 
+        } else {
+
+            newGrid[row][col] = props.selectedMaterial()
+        } 
+        setFieldGrid([...newGrid])
+    }
+
+
+    function randomMaterial() {
+        let gridClone = [...fieldGrid()]
+        let flatGridClone = gridClone.flat()
+
+        let possibleArray: any[] = []
+        const correctMaterials = ["road-Ld", "road-Ulr", "road-h", "sand-road-Ld","water", "grass"]
+
+        for (let flattendIdx = 0; flattendIdx < flatGridClone.length; flattendIdx++) {
+            if (!flatGridClone[flattendIdx].broken && correctMaterials.includes(flatGridClone[flattendIdx].name)) {
+                possibleArray.push(flattendIdx)
             }
         }
 
-        newGrid[row][col] = props.selectedMaterial()
-        setFieldGrid([...newGrid])
+        if (possibleArray.length > 0) {
+            const randomIdx = Math.floor(Math.random() * possibleArray.length) 
+            const rowIndex = Math.floor(possibleArray[randomIdx] / gridSize.rows);
+            const colIndex = possibleArray[randomIdx] % gridSize.cols;
+
+            gridClone[rowIndex][colIndex] = {...gridClone[rowIndex][colIndex], broken: true}
+            setFieldGrid([...gridClone])
+        } else {
+            console.log("nothing to be found")
+        }
     }
+
+
+    createEffect(() => {
+        const randomMaterialInterval = setInterval(function() {
+           randomMaterial()
+        }, 160000);
+        return () => {
+            clearInterval(randomMaterialInterval)
+        }
+    }, []);
+    
+
 
     let grass = 0
     let houses = 0
@@ -126,11 +209,12 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
         })
     }, [fieldGrid])
 
-    // Receive money every 5 seconds
+    // Receive money every 5 seconds and remove from displaylist
     createEffect(() => {
         const interval = setInterval(function() {
             if (insideDocument) {
                 props.setScore((prevScore: number) => prevScore + calculateScore(grass, roads, shops, houses))
+                addToDisplay(undefined, undefined, 'add', calculateScore(grass, roads, shops, houses))
             }
             return () => {
                 clearInterval(interval)
@@ -138,18 +222,37 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
         }, 5000);
     }, []);
     
+    
+
     return (
-        <div class="grid">{
+        <div class="display-list">
+                <div class="grid">
+                {displayList().map(el =>{
+                    if (el.startsWith('-')) {
+                        return (
+                            <p style={{color: 'red'}}>{el}</p>
+                            )
+                        } else if (el.startsWith('+')) {
+                        return (
+                            <p style={{color: 'green'}}>{el}</p>
+                        )
+                    }
+                })}
+            </div>
+            {
             fieldGrid().map((rows: any, rowIdx: number) => {
                 return (
-                    <div class="rows">
-                        {rows.map((cols: any, colIdx: number) => {
-                            return (<div style={{
-                                rotate: cols.rotation + "deg"
-                            }}
-                            onClick={() => fieldMutation(rowIdx, colIdx)} class={"cols" + " " + `${cols.name}`}></div>)
-                        })}
-                    </div>
+                    <>
+                        <div class="rows">
+                            {rows.map((cols: any, colIdx: number) => {
+                                return (<div style={{
+                                    rotate: cols.rotation + "deg"
+                                }}
+                                ref={colRef}
+                                onClick={(event) => fieldMutation(rowIdx, colIdx, event)} class={"cols" + " " + `${cols.name}`+ " " + `${cols.broken ? "broken": ""}`}></div>)
+                            })}
+                        </div>
+                    </>
                 )
             })}
         </div>
