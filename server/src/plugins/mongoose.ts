@@ -4,7 +4,7 @@ import { red, green, redBright } from "console-log-colors";
 export default fp(async (fastify) => {
   mongoose.connect(
     process.env.MONGODB_CONNECTION_URL ||
-      "mongodb://localhost:27017/city-master"
+      "mongodb://127.0.0.1:27017/city-master"
   );
   const db = mongoose.connection;
   db.once("open", () => {
