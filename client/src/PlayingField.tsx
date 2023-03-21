@@ -14,6 +14,12 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
         cols: 25
     }
 
+    const audios = [
+        {material: "sand", url: '../GameAudio/sand.mp3'},
+        {material: "water", url: '../GameAudio/splash.mp3'},
+        {material: "place", url: '../GameAudio/place.mp3'},
+        {material: "grass", url: '../GameAudio/grass.mp3'},
+    ]
 
     const grassObject = {name: "grass", price: 10, rotation: 0, broken: false}
     const [fieldGrid, setFieldGrid] = createSignal(Array.from({ length: gridSize.rows }, () => Array.from({ length: gridSize.cols }, () => grassObject)))
@@ -110,9 +116,16 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
                 newGrid[row][col] = props.selectedMaterial()
             } 
         } else {
-
             newGrid[row][col] = props.selectedMaterial()
         } 
+        props.selectedMaterial().name;
+        const selectedAudio = audios.find(audio => audio.material === props.selectedMaterial().name) ?? audios.find(audio => audio.material === "place");
+        if (selectedAudio === undefined) {
+            throw console.error("Selected audio is not defined.");
+        }
+        const sound = new Audio(selectedAudio?.url);
+        sound.volume = .2;
+        sound.play();
         setFieldGrid([...newGrid])
     }
 
