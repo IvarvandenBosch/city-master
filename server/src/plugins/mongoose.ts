@@ -16,3 +16,14 @@ export default fp(async (fastify) => {
   });
   fastify.decorate("models", {});
 });
+
+export const findOneOrCreate = async (parameters: any, model: any) => {
+  return (
+    (await model.findOne({
+      ...parameters,
+    })) ??
+    model.create({
+      ...parameters,
+    })
+  );
+};
