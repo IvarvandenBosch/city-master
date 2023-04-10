@@ -4,6 +4,9 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import User from "../models/User";
 import { findOneOrCreate } from "./mongoose";
 import fs from "fs";
+/* @ts-ignore */
+import { Strategy as LocalStrategy } from "passport-local";
+import argon2 from "argon2";
 /**
  * This plugins adds some utilities to handle formbodys
  *
@@ -35,11 +38,41 @@ export default fp(async (fastify) => {
               gid: profile._json.sub,
               email: profile._json.email,
             },
+            {
+              gid: profile._json.sub,
+              email: profile._json.email,
+            },
             User
           )
         );
       }
     )
+  );
+  fastifyPassport.use(
+    new LocalStrategy(async function verify(
+      username: string,
+      password: string,
+      cb: Function
+    ) {
+      let user = await User.findOne({
+        email: username,
+      });
+
+      if (user && !argon2.verify(user.password, password)) {
+        cb({
+          error: "Passwords do not match.",
+        });
+      }
+
+      if (!user) {
+        user = await User.create({
+          email: username,
+          password: await argon2.hash(password),
+        });
+      }
+
+      cb(null, user);
+    })
   );
 
   fastifyPassport.registerUserDeserializer(async (user, req) => {

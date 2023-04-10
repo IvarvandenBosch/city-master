@@ -17,13 +17,13 @@ export default fp(async (fastify) => {
   fastify.decorate("models", {});
 });
 
-export const findOneOrCreate = async (parameters: any, model: any) => {
+export const findOneOrCreate = async (find: any, create: any, model: any) => {
   return (
     (await model.findOne({
-      ...parameters,
+      ...find,
     })) ??
     model.create({
-      ...parameters,
+      ...create,
     })
   );
 };
