@@ -2,17 +2,26 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: sans-serif;
 }
 
-main {
-  display: flex;
+:root {
+  --button-color: rgb(132, 0, 255);
+  --background-color: rgba(181, 102, 255, 0.377);
+}
 
+main {  
+  display: flex;
 }
 
 .rows {
   display: flex;
 }
 
+nav {
+  background-color: var(--background-color);
+  padding: 10px;
+}
 
 
 .cols {
@@ -38,6 +47,23 @@ main {
   z-index: -1;
 }
 
+.reset {
+  width: 100%;
+  margin-right: 5px;
+  padding-block: 5px;
+  margin-block: 10px;
+  background-color: var(--button-color);
+  color: #fff;
+  border: none;
+  font-size: 14px;
+  border-radius: .2rem;
+  font-weight: bold;
+}
+
+hr {
+  opacity: .5;
+}
+
 .flex {
   display: flex;
   flex-wrap: wrap;
@@ -47,9 +73,19 @@ main {
   cursor: pointer;
 }
 
+.ui {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 10px;
+}
+
 .material-list {
-  background-color: #a3a3a385;
+  background-color: var(--background-color);
   padding: 10px;
+  position: sticky;
+  height: 100vh;
+  align-items: start;
+  top: 0;
 }
 
 .material-list h3 {
@@ -62,8 +98,7 @@ main {
   position: relative;
 }
 
-.rotate {
-  border: solid 1px black;
+.rotate { 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -72,9 +107,20 @@ main {
 }
 
 button {
-  border: solid 1px black;
-  padding: 3px;
+  background-color: var(--button-color);
+  border-radius: .2rem;
+  border: none;
+  color: #fff;
+  padding: 5px;
+  font-weight: bold;
   cursor: pointer;
+}
+
+@media (max-width: 1255px) {
+  .material-list {
+    right: 0;
+    top: 0;
+  }
 }
 
 .grass {

@@ -5,6 +5,7 @@ type playingFieldT = {
     setSelectedMaterial: Function;
     score: number;
     setScore: Function;
+    volume: number;
 };
 
 
@@ -14,12 +15,6 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
         cols: 25
     }
 
-    const audios = [
-        {material: "sand", url: '../GameAudio/sand.mp3'},
-        {material: "water", url: '../GameAudio/splash.mp3'},
-        {material: "place", url: '../GameAudio/place.mp3'},
-        {material: "grass", url: '../GameAudio/grass.mp3'},
-    ]
 
     const grassObject = {name: "grass", price: 10, rotation: 0, broken: false}
     const [fieldGrid, setFieldGrid] = createSignal(Array.from({ length: gridSize.rows }, () => Array.from({ length: gridSize.cols }, () => grassObject)))
@@ -88,6 +83,11 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
         }
         
         
+       findSurroundings(newGrid, col, row)
+        playAudio()
+        setFieldGrid([...newGrid])
+    }
+    function findSurroundings(newGrid: any[][], col: number, row: number) {
         const surroundingsArray = [newGrid[row - 1] && newGrid[row - 1][col],
             newGrid[row + 1] && newGrid[row + 1][col],
             newGrid[row] && newGrid[row][col - 1],
@@ -111,22 +111,31 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
                     ...props.selectedMaterial(),
                     name: `sand-${props.selectedMaterial().name}`
                 }
-                
+
             } else {
                 newGrid[row][col] = props.selectedMaterial()
             } 
         } else {
             newGrid[row][col] = props.selectedMaterial()
-        } 
-        props.selectedMaterial().name;
+    } 
+    }
+
+    // Plays the correct audio
+    function playAudio() {
+        const audios = [
+            {material: "sand", url: '../GameAudio/sand.mp3'},
+            {material: "water", url: '../GameAudio/splash.mp3'},
+            {material: "place", url: '../GameAudio/place.mp3'},
+            {material: "grass", url: '../GameAudio/grass.mp3'},
+        ]
+
         const selectedAudio = audios.find(audio => audio.material === props.selectedMaterial().name) ?? audios.find(audio => audio.material === "place");
         if (selectedAudio === undefined) {
             throw console.error("Selected audio is not defined.");
         }
         const sound = new Audio(selectedAudio?.url);
-        sound.volume = .2;
+        sound.volume = props.volume/100;
         sound.play();
-        setFieldGrid([...newGrid])
     }
 
 

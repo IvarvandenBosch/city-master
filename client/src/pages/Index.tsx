@@ -9,28 +9,28 @@ import { UserInterface } from "../UserInterface";
 export const Game: Component = () => {
   const [score, setScore] = createSignal(0);
   const [selectedMaterial, setSelectedMaterial] = createSignal<string>();
+  const [volume, setVolume] = createSignal<number>(40);
+  const [matsExpanded, setMatsExpanded] = createSignal<boolean>(false);
 
   return (
     <>
-      <nav>Score: {score()}</nav>
+      <nav>Score: {score()} <button onClick={() => setMatsExpanded((expaned: any) => !expaned)}>test</button></nav>
       <main class={styles.App}>
         <PlayingField
           score={score()}
           setScore={setScore}
           selectedMaterial={selectedMaterial}
           setSelectedMaterial={setSelectedMaterial}
+          volume={volume()}
         />
         <MaterialSelect
+          matsExpanded={matsExpanded()}
           score={score()}
           setScore={setScore}
           selectedMaterial={selectedMaterial}
           setSelectedMaterial={setSelectedMaterial}
-        />
-        <UserInterface
-          score={score()}
-          setScore={setScore}
-          selectedMaterial={selectedMaterial}
-          setSelectedMaterial={setSelectedMaterial}
+          volume={volume()}
+          setVolume={setVolume}
         />
       </main>
     </>

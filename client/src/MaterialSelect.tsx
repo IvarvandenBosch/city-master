@@ -1,11 +1,14 @@
 import { Component, createSignal } from "solid-js";
-import { FaSolidXmark } from 'solid-icons/fa'
+import { UserInterface } from "./UserInterface";
 
 type matSelectT = { 
+  matsExpanded: Boolean;
   selectedMaterial: Function;
   setSelectedMaterial: Function;
   score: number;
   setScore: Function;
+  volume: number;
+  setVolume: Function;
 };
 
 
@@ -26,7 +29,7 @@ export const MaterialSelect: Component<matSelectT> = (props) => {
 
 
   return (
-    <aside class="material-list">
+    <aside class="material-list" style={{display: props.matsExpanded ? 'block' : 'none'}}>
       <h1>Materials</h1>
       <h3>{props.selectedMaterial()?.name.split('-')[0] ?? "Select a material" + " " + (props.selectedMaterial()?.name.split('-')[1] ?? "") }</h3>
       <div class="flex">
@@ -47,7 +50,18 @@ export const MaterialSelect: Component<matSelectT> = (props) => {
           );
         })}
       </div>
-        <button class="reset" onClick={() => props.setSelectedMaterial(undefined)}><FaSolidXmark /></button>
+      <button class="reset" onClick={() => props.setSelectedMaterial(undefined)}>Clear</button>
+
+      <hr/>
+      
+      <UserInterface
+        score={props.score}
+        setScore={props.setScore}
+        selectedMaterial={props.selectedMaterial}
+        setSelectedMaterial={props.setSelectedMaterial}
+        setVolume={props.setVolume}
+        volume={props.volume}
+      />
     </aside>
   );
 };

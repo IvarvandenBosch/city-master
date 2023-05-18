@@ -6,27 +6,11 @@ type userInterfaceT = {
     setSelectedMaterial: Function;
     score: number;
     setScore: Function;
+    volume: number;
+    setVolume: Function;
 }
 
 export const UserInterface: Component<userInterfaceT>  = (props) => {
-
-    // function incDecDegreees(key: string) {
-    //     if (!props.selectedMaterial()){return}
-    //     let material = {...props.selectedMaterial()}
-    //     if (key === "inc") {
-    //         if (props.selectedMaterial().rotation + 90 > 360) {
-    //             return
-    //         }
-    //         material = {...material, rotation: props.selectedMaterial().rotation + 90}
-    //     } else if (key === "dec") {
-    //         if (props.selectedMaterial().rotation - 90 < 0) {
-    //             return
-    //         }
-    //         material = {...material, rotation: props.selectedMaterial().rotation - 90}
-    //     }
-    //     props.setSelectedMaterial({...material})
-    // }
-
     window.addEventListener("keypress", (event) => {
         if (event.key === "r") {
             rotate()
@@ -54,9 +38,14 @@ export const UserInterface: Component<userInterfaceT>  = (props) => {
 
     return (
         <div class="ui">
-            <p>Rotate: {`(${props.selectedMaterial()?.rotation ? props.selectedMaterial().rotation : 0} degrees)`}</p>
-            <button class="rotate" onClick={() => rotate()} title="press 'r'"><FaSolidArrowRotateRight /></button>
-            <button onClick={() => props.setScore((prevScore: number) => prevScore + 200)}>Cheat code (+ 200 score)</button>
+            <section>
+                <p>Rotate: {`(${props.selectedMaterial()?.rotation ? props.selectedMaterial().rotation : 0} degrees)`}</p>
+                <button class="rotate" onClick={() => rotate()} title="press 'r'"><FaSolidArrowRotateRight /></button>
+            </section>
+            <section>
+                <p>Volume ({props.volume})</p>
+                <input type="range" value={props.volume} max={100} min={0} onChange={(e) => props.setVolume(e.currentTarget.valueAsNumber)}/>
+            </section> 
         </div>
     )
 }
