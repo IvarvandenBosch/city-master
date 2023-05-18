@@ -19,6 +19,7 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
     const grassObject = {name: "grass", price: 10, rotation: 0, broken: false}
     const [fieldGrid, setFieldGrid] = createSignal(Array.from({ length: gridSize.rows }, () => Array.from({ length: gridSize.cols }, () => grassObject)))
     const [displayList, setDisplayList] = createSignal<string[]>([])
+    const [inProgress, setInProgress] = createSignal<boolean>(false)
 
     // Check if user Is currently on the webpage
     let insideDocument = true
@@ -62,11 +63,25 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
         let newGrid = [...fieldGrid()]
         
         if (newGrid[row][col].broken) {
-            newGrid[row][col].broken = false
-            props.setScore((prevScore: number) => prevScore + 30)
-            addToDisplay(undefined, undefined, 'add', 30)
-            event.target.classList.remove("broken")
-        }
+            if (inProgress()) {
+              alert("You can only remove one broken piece at a time.");
+            } else {
+              event.target.classList.add("loading");
+              setInProgress(true);
+          
+              const timeout = setTimeout(() => {
+                // Remove loading animation after 5 seconds
+                event.target.classList.remove("loading");
+                newGrid[row][col].broken = false;
+                props.setScore((prevScore: number) => prevScore + 30);
+                addToDisplay(undefined, undefined, 'add', 30);
+                event.target.classList.remove("broken");
+                setInProgress(false);
+                clearTimeout(timeout); // Clear previous timeout
+              }, 5000);
+          
+            }
+          }
 
         if (props.selectedMaterial() === undefined || fieldGrid()[row][col].name === props.selectedMaterial().name && fieldGrid()[row][col].rotation === props.selectedMaterial().rotation) {
             return
@@ -159,8 +174,6 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
 
             gridClone[rowIndex][colIndex] = {...gridClone[rowIndex][colIndex], broken: true}
             setFieldGrid([...gridClone])
-        } else {
-            console.log("nothing to be found")
         }
     }
 
@@ -168,7 +181,7 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
     createEffect(() => {
         const randomMaterialInterval = setInterval(function() {
            randomMaterial()
-        }, 160000);
+        }, 10000);
         return () => {
             clearInterval(randomMaterialInterval)
         }

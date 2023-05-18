@@ -10,11 +10,11 @@ export const Game: Component = () => {
   const [score, setScore] = createSignal(0);
   const [selectedMaterial, setSelectedMaterial] = createSignal<string>();
   const [volume, setVolume] = createSignal<number>(40);
-  const [matsExpanded, setMatsExpanded] = createSignal<boolean>(false);
+  const [matsExpanded, setMatsExpanded] = createSignal<boolean>(true);
 
   return (
     <>
-      <nav>Score: {score()} <button onClick={() => setMatsExpanded((expaned: any) => !expaned)}>test</button></nav>
+      <nav>Score: {score()} <button class="navbtn" onClick={() => setMatsExpanded((expaned: any) => !expaned)}>test</button></nav>
       <main class={styles.App}>
         <PlayingField
           score={score()}
