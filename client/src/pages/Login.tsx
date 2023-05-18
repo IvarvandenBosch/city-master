@@ -3,7 +3,7 @@ import { Component, createSignal } from "solid-js";
 
 export const Login: Component = () => {
   return (<>
-  <main>
+  <main class="login">
     <div>
       <div class="text">
         <p class="title">Login</p>
