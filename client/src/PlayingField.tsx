@@ -79,7 +79,6 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
                 setInProgress(false);
                 clearTimeout(timeout); // Clear previous timeout
               }, 5000);
-          
             }
           }
 
@@ -181,7 +180,7 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
     createEffect(() => {
         const randomMaterialInterval = setInterval(function() {
            randomMaterial()
-        }, 10000);
+        }, 160000);
         return () => {
             clearInterval(randomMaterialInterval)
         }
