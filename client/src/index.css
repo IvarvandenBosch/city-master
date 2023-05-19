@@ -14,6 +14,12 @@
 main {  
   display: flex;
 }
+.field {
+  position: relative;
+}
+.car {
+  z-index: 10;
+}
 
 .rows {
   display: flex;
@@ -231,7 +237,12 @@ button {
     display: none;
   }
 }
-
+.car {
+  background-image: url(../GameAssets/car.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
 .grass {
   background-image: url(../GameAssets/grass.png);
 }

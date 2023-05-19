@@ -14,11 +14,11 @@ export default function Car() {
     position: 'absolute',
     width: '50px',
     height: '30px',
-    background: 'red',
     boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
     rotate: 0,
     transition: 'top 0.1s, left 0.1s, rotate 0.2s ease'
   });
+  const [carRef, setCarRef] = createSignal<any>();
 
   // Add event listeners for keydown and update the position accordingly
   createEffect(() => {
@@ -27,25 +27,61 @@ export default function Car() {
 
       // Update position based on the key pressed
       if (key === 'ArrowUp' || key === 'w') {
-        setPosition((prevPos) => ({ ...prevPos, y: prevPos.y - speed() }));
-        setDirection("up")
+        event.preventDefault();
+        if (position().y - speed() >= 2) {
+          setPosition((prevPos) => ({ ...prevPos, y: prevPos.y - speed() }));
+          setDirection("up");
+        }
       } else if (key === 'ArrowDown' || key === 's') {
-        setPosition((prevPos) => ({ ...prevPos, y: prevPos.y + speed() }));
-        setDirection("down")
+        event.preventDefault();
+        if (position().y + speed() < 970) {
+          setPosition((prevPos) => ({ ...prevPos, y: prevPos.y + speed() }));
+          setDirection("down");
+        }
       } else if (key === 'ArrowLeft' || key === 'a') {
-        setPosition((prevPos) => ({ ...prevPos, x: prevPos.x - speed() }));
-        setDirection("left")
+        if (position().x - speed() >= 0) {
+          setPosition((prevPos) => ({ ...prevPos, x: prevPos.x - speed() }));
+          setDirection("left");
+        }
       } else if (key === 'ArrowRight' || key === 'd') {
-        setPosition((prevPos) => ({ ...prevPos, x: prevPos.x + speed() }));
-        setDirection("right")
-      }
+        if (position().x + speed() < 960) {
+          setPosition((prevPos) => ({ ...prevPos, x: prevPos.x + speed() }));
+          setDirection("right");
+        }
+      }      
     };
 
+    checkCarIntersection()
     window.addEventListener('keydown', handleKeyDown);
     onCleanup(() => window.removeEventListener('keydown', handleKeyDown));
-
-    
   });
+
+  const checkCarIntersection = () => {
+    const parentDivs = ["road-h", "road-Ld", "road-Ulr", "road-fourway"];
+    const carDiv = carRef();
+
+    if (carDiv) {
+      const carRect = carDiv.getBoundingClientRect();
+
+      parentDivs.forEach((className) => {
+        const parentDiv = document.querySelector(`.${className}`);
+
+        if (parentDiv) {
+          const parentRect = parentDiv.getBoundingClientRect();
+
+          if (
+            carRect.top < parentRect.bottom &&
+            carRect.bottom > parentRect.top &&
+            carRect.left < parentRect.right &&
+            carRect.right > parentRect.left
+          ) {
+            setSpeed((originalSpeed) => originalSpeed / 2);
+            console.log("not on road")
+          }
+        }
+      });
+    }
+  };
 
   // Update the style signal when the position changes
   createEffect(() => {
@@ -59,5 +95,5 @@ export default function Car() {
     }));
   });
 
-  return <div class="car" style={style()}></div>;
+  return <div class="car" ref={setCarRef} style={style()}></div>;
 }

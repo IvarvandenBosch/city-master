@@ -154,7 +154,7 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
         sound.play();
     }
 
-
+    // Gets random material and turns it to a broken one
     function randomMaterial() {
         let gridClone = [...fieldGrid()]
         let flatGridClone = gridClone.flat()
@@ -179,6 +179,7 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
     }
 
 
+    // Runs random Material every 2.33 minutes
     createEffect(() => {
         const randomMaterialInterval = setInterval(function() {
            randomMaterial()
@@ -195,6 +196,7 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
     let roads = 0
     let shops = 0
     let trees = 0
+    let brokenMats = 0
 
     function calculateScore(grassCount: number, roadCount: number, shopCount: number, houseCount: number, treeCount: number) {
         let deviationScore = 0;
@@ -222,6 +224,11 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
         let score = 100 - deviationScore * 100 / amountOfMats;
         score = Math.min(score, 100);
         score = Math.max(score, 10);
+
+        // Product of score * 0.5 to the power of how many broken materials there are.  
+        if (brokenMats){
+            score = score * (0.5 ** brokenMats) 
+        }
         score = Math.round(score);
         return score;
     }
@@ -233,12 +240,17 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
         roads = 0
         shops = 0
         trees = 0
+        brokenMats = 0
 
         fieldGrid().flat().forEach((mat) => {
             
         const houseArray = ["house-1", "house-2", "house-3"]
         const roadsArray = ["road-h","road-v","road-Ld","road-Rd","road-Ul","road-Ur", "road-Ulr"]
         
+        if (mat.broken) {
+            brokenMats += 1
+        }
+
         if (mat.name === "grass") {
             grass += 1
         } else if ( mat.name === 'tree') {
@@ -284,23 +296,25 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
                     }
                 })}
             </div>
-            {
-            fieldGrid().map((rows: any, rowIdx: number) => {
-                return (
-                    <>
-                        <Car />
-                        <div class="rows">
-                            {rows.map((cols: any, colIdx: number) => {
-                                return (<div style={{
-                                    rotate: cols.rotation + "deg"
-                                }}
-                                ref={colRef}
-                                onClick={(event) => fieldMutation(rowIdx, colIdx, event)} class={"cols" + " " + `${cols.name}`+ " " + `${cols.broken ? "broken": ""}`}></div>)
-                            })}
-                        </div>
-                    </>
-                )
-            })}
+            <div class="field">
+                <Car />
+                {
+                    fieldGrid().map((rows: any, rowIdx: number) => {
+                    return (
+                        <>
+                            <div class="rows">
+                                {rows.map((cols: any, colIdx: number) => {
+                                    return (<div style={{
+                                        rotate: cols.rotation + "deg"
+                                    }}
+                                    ref={colRef}
+                                    onClick={(event) => fieldMutation(rowIdx, colIdx, event)} class={"cols" + " " + `${cols.name}`+ " " + `${cols.broken ? "broken": ""}`}></div>)
+                                })}
+                            </div>
+                        </>
+                    )
+                })}
+            </div>
         </div>
     )
 }
