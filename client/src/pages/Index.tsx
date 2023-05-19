@@ -14,7 +14,15 @@ export const Game: Component = () => {
 
   return (
     <>
-      <nav>Score: {score()} <button class="navbtn" onClick={() => setMatsExpanded((expaned: any) => !expaned)}>test</button></nav>
+      <nav>
+        Score: {score()}{" "}
+        <button
+          class="navbtn"
+          onClick={() => setMatsExpanded((expaned: any) => !expaned)}
+        >
+          test
+        </button>
+      </nav>
       <main class={styles.App}>
         <PlayingField
           score={score()}

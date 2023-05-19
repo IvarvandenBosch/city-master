@@ -4,7 +4,7 @@ const root: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
   fastify.get("/", async function (request, reply) {
     // Send back configuration
     console.log(request.isAuthenticated());
-    console.log(request.user)
+    console.log(request.user);
     return {
       name: process.env.NAME,
       version: process.env.VERSION,

@@ -11,7 +11,7 @@
   --background-color: rgba(181, 102, 255, 0.377);
 }
 
-main {  
+main {
   display: flex;
 }
 .field {
@@ -23,7 +23,7 @@ main {
 }
 
 .car::before {
-  content: '';
+  content: "";
   top: 5px;
   transform: translateZ(-1px);
   width: 40px;
@@ -42,7 +42,6 @@ nav {
   background-color: var(--background-color);
   padding: 10px;
 }
-
 
 .cols {
   height: 40px;
@@ -76,12 +75,12 @@ nav {
   color: #fff;
   border: none;
   font-size: 14px;
-  border-radius: .2rem;
+  border-radius: 0.2rem;
   font-weight: bold;
 }
 
 hr {
-  opacity: .5;
+  opacity: 0.5;
 }
 
 .flex {
@@ -118,7 +117,7 @@ hr {
   position: relative;
 }
 
-.rotate { 
+.rotate {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -128,7 +127,7 @@ hr {
 
 button {
   background-color: var(--button-color);
-  border-radius: .2rem;
+  border-radius: 0.2rem;
   border: none;
   color: #fff;
   padding: 5px;
@@ -136,14 +135,16 @@ button {
   cursor: pointer;
 }
 
-.login {
+.login,
+.register {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
 }
 
-.login div {
+.login,
+.register div {
   background-color: #ffffff;
   padding: 40px;
   border: 1px solid #dadce0;
@@ -152,46 +153,54 @@ button {
   width: 100%;
 }
 
-.login h2 {
+.login,
+.register h2 {
   text-align: center;
   font-size: 30px;
   margin-bottom: 30px;
 }
 
-.login section {
+.login,
+.register section {
   margin-bottom: 30px;
 }
 
-.login .title {
+.login,
+.register .title {
   font-size: 1.4rem;
   font-weight: 600;
 }
-.login .text {
+.login,
+.register .text {
   text-align: center;
   border: 0;
   padding-bottom: 20px;
   padding-top: 0;
 }
-.login .inputs {
+.login,
+.register .inputs {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.login input {
+.login,
+.register input {
   padding: 15px;
   font-size: 20px;
   border-radius: 5px;
   border: 1px solid #ccc;
   color: #242424;
 }
-.login small {
+.login,
+.registersmall {
   text-decoration: underline;
   cursor: pointer;
   columns: var(--button-color);
 }
 
-.login button {
+.login,
+.registerbutton {
   padding: 10px 20px;
   font-size: 20px;
   background-color: var(--button-color);
@@ -202,17 +211,18 @@ button {
   transition: background-color 100ms ease-in-out;
 }
 
-.login button:hover {
+.login,
+.registerbutton:hover {
   transition: background-color 100ms ease-in-out;
   background-color: var(--hover-color);
 }
 
-.login hr {
+.login,
+.registerhr {
   border: none;
   border-top: 1px solid #ccc;
   margin-bottom: 30px;
 }
-
 
 @keyframes loadingAnimation {
   0% {
@@ -306,7 +316,7 @@ button {
 }
 .sand-road-Ld {
   background-image: url(../GameAssets/sand-road-Ld.png);
-}   
+}
 .road-fourway {
   background-image: url(../GameAssets/road-fourway.png);
 }
@@ -331,7 +341,5 @@ button {
 .broken.water {
   background-image: url(../GameAssets/polluted-water.png);
 }
-
-
 
 /* More assets later to be implemented */
