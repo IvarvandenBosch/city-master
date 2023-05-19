@@ -198,7 +198,7 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
     let trees = 0
     let brokenMats = 0
 
-    function calculateScore(grassCount: number, roadCount: number, shopCount: number, houseCount: number, treeCount: number) {
+    function calculateScore(grassCount: number, roadCount: number, shopCount: number, houseCount: number, treeCount: number, brokenMatsCount: number) {
         let deviationScore = 0;
         let totalArea = grassCount + roadCount + shopCount + houseCount + treeCount
         const amountOfMats = 5
@@ -226,14 +226,13 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
         score = Math.max(score, 10);
 
         // Product of score * 0.5 to the power of how many broken materials there are.  
-        if (brokenMats){
-            score = score * (0.5 ** brokenMats) 
-        }
+        score = score * (0.5 ** brokenMats) 
         score = Math.round(score);
+        console.table({brokenMats, score})
         return score;
     }
     
-    createEffect(() => {
+    function countAll() {
         // Reset all values
         grass = 0
         houses = 0
@@ -242,36 +241,35 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
         trees = 0
         brokenMats = 0
 
-        fieldGrid().flat().forEach((mat) => {
+        fieldGrid().flat().forEach((mat) => { 
+            const houseArray = ["house-1", "house-2", "house-3"]
+            const roadsArray = ["road-h","road-v","road-Ld","road-Rd","road-Ul","road-Ur", "road-Ulr"]
             
-        const houseArray = ["house-1", "house-2", "house-3"]
-        const roadsArray = ["road-h","road-v","road-Ld","road-Rd","road-Ul","road-Ur", "road-Ulr"]
-        
-        if (mat.broken) {
-            brokenMats += 1
-        }
-
-        if (mat.name === "grass") {
-            grass += 1
-        } else if ( mat.name === 'tree') {
-           trees += 1
-        } 
-        else if (houseArray.includes(mat.name)) {
-            houses += 1
-        } else if (roadsArray.includes(mat.name)) {
-            roads += 1
-        } else if (mat.name === "shop") {
-            shops += 1
-        }
+            if (mat.broken) {
+                brokenMats += 1
+            }
+            if (mat.name === "grass") {
+                grass += 1
+            } else if ( mat.name === 'tree') {
+               trees += 1
+            } 
+            else if (houseArray.includes(mat.name)) {
+                houses += 1
+            } else if (roadsArray.includes(mat.name)) {
+                roads += 1
+            } else if (mat.name === "shop") {
+                shops += 1
+            }
         })
-    }, [fieldGrid])
+    }
 
     // Receive money every 5 seconds and remove from displaylist
     createEffect(() => {
         const interval = setInterval(function() {
             if (insideDocument) {
-                props.setScore((prevScore: number) => prevScore + calculateScore(grass, roads, shops, houses, trees))
-                addToDisplay(undefined, undefined, 'add', calculateScore(grass, roads, shops, houses, trees))
+                countAll()
+                props.setScore((prevScore: number) => prevScore + calculateScore(grass, roads, shops, houses, trees, brokenMats))
+                addToDisplay(undefined, undefined, 'add', calculateScore(grass, roads, shops, houses, trees, brokenMats))
             }
             return () => {
                 clearInterval(interval)
