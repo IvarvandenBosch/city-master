@@ -117,10 +117,6 @@ button {
   cursor: pointer;
 }
 
-.loading {
-  position: relative;
-}
-
 .login {
   display: flex;
   justify-content: center;
@@ -208,6 +204,21 @@ button {
   }
 }
 
+.loading {
+  position: relative;
+}
+
+.loading::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: #00aaff; /* Replace with your desired color */
+  animation: loadingAnimation 5s linear forwards;
+}
+
 @media (max-width: 1255px) {
   .material-list {
     right: 0;
@@ -223,6 +234,9 @@ button {
 
 .grass {
   background-image: url(../GameAssets/grass.png);
+}
+.tree {
+  background-image: url(../GameAssets/tree.png);
 }
 .water {
   background-image: url(../GameAssets/water.png);

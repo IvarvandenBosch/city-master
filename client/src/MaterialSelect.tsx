@@ -15,6 +15,7 @@ type matSelectT = {
 export const MaterialSelect: Component<matSelectT> = (props) => {
   const materials = [
     {name: "grass", price: 10, rotation: 0, broken: false},
+    {name: "tree", price: 50, rotation: 0, broken: false},
     {name: "house-1", price: 500, rotation: 0, broken: false},
     {name: "house-2", price: 500, rotation: 0, broken: false},
     {name: "house-3", price: 500, rotation: 0, broken: false},

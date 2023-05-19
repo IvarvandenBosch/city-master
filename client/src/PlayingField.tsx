@@ -1,4 +1,5 @@
 import { Component, createSignal, createEffect } from "solid-js";
+import Car from "./Car";
 
 type playingFieldT = {
     selectedMaterial: Function;
@@ -141,6 +142,7 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
             {material: "water", url: '../GameAudio/splash.mp3'},
             {material: "place", url: '../GameAudio/place.mp3'},
             {material: "grass", url: '../GameAudio/grass.mp3'},
+            {material: "tree", url: '../GameAudio/grass.mp3'},
         ]
 
         const selectedAudio = audios.find(audio => audio.material === props.selectedMaterial().name) ?? audios.find(audio => audio.material === "place");
@@ -192,27 +194,32 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
     let houses = 0
     let roads = 0
     let shops = 0
+    let trees = 0
 
-    function calculateScore(grassCount: number, roadCount: number, shopCount: number, houseCount: number) {
+    function calculateScore(grassCount: number, roadCount: number, shopCount: number, houseCount: number, treeCount: number) {
         let deviationScore = 0;
-        let totalArea = grassCount + roadCount + shopCount + houseCount
+        let totalArea = grassCount + roadCount + shopCount + houseCount + treeCount
+        const amountOfMats = 5
     
-        const idealGrassPercentage = 70;
+        const idealGrassPercentage = 66;
         const idealRoadsPercentage = 10.5;
         const idealShopsPercentage = 7.5;
         const idealHousesPercentage = 12;
+        const idealTreesPercentage = 4;
       
         const grassPercentage = grassCount / totalArea * 100;
         const roadsPercentage = roadCount / totalArea * 100;
         const shopsPercentage = shopCount / totalArea * 100;
         const housesPercentage = houseCount / totalArea * 100;
+        const treesPercentage = treeCount / totalArea * 100;
       
         deviationScore += Math.pow((grassPercentage - idealGrassPercentage) / idealGrassPercentage, 2);
         deviationScore += Math.pow((roadsPercentage - idealRoadsPercentage) / idealRoadsPercentage, 2);
         deviationScore += Math.pow((shopsPercentage - idealShopsPercentage) / idealShopsPercentage, 2);
         deviationScore += Math.pow((housesPercentage - idealHousesPercentage) / idealHousesPercentage, 2);
+        deviationScore += Math.pow((treesPercentage - idealTreesPercentage) / idealTreesPercentage, 2);
     
-        let score = 100 - deviationScore * 100 / 4;
+        let score = 100 - deviationScore * 100 / amountOfMats;
         score = Math.min(score, 100);
         score = Math.max(score, 10);
         score = Math.round(score);
@@ -225,6 +232,7 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
         houses = 0
         roads = 0
         shops = 0
+        trees = 0
 
         fieldGrid().flat().forEach((mat) => {
             
@@ -233,7 +241,10 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
         
         if (mat.name === "grass") {
             grass += 1
-        } else if (houseArray.includes(mat.name)) {
+        } else if ( mat.name === 'tree') {
+           trees += 1
+        } 
+        else if (houseArray.includes(mat.name)) {
             houses += 1
         } else if (roadsArray.includes(mat.name)) {
             roads += 1
@@ -247,8 +258,8 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
     createEffect(() => {
         const interval = setInterval(function() {
             if (insideDocument) {
-                props.setScore((prevScore: number) => prevScore + calculateScore(grass, roads, shops, houses))
-                addToDisplay(undefined, undefined, 'add', calculateScore(grass, roads, shops, houses))
+                props.setScore((prevScore: number) => prevScore + calculateScore(grass, roads, shops, houses, trees))
+                addToDisplay(undefined, undefined, 'add', calculateScore(grass, roads, shops, houses, trees))
             }
             return () => {
                 clearInterval(interval)
@@ -277,6 +288,7 @@ export const PlayingField:  Component<playingFieldT> = (props) => {
             fieldGrid().map((rows: any, rowIdx: number) => {
                 return (
                     <>
+                        <Car />
                         <div class="rows">
                             {rows.map((cols: any, colIdx: number) => {
                                 return (<div style={{
