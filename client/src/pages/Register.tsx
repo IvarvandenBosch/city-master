@@ -2,7 +2,7 @@ import { Component, createSignal } from "solid-js";
 import { Link } from "@solidjs/router";
 
 export const Register: Component = () => {
-  const register = (event) => {
+  const register = (event: { target: { email: any; password: any; }; }) => {
     const {email, password} = event.target
   }
   return (

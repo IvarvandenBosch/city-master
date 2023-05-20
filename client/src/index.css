@@ -81,7 +81,7 @@ main {
   left: 5px; 
 }
 
-.car::after {
+.show-range::after {
   content: "";
   position: absolute;
   top: -170px;
