@@ -1,10 +1,14 @@
 import { Component, createSignal } from "solid-js";
 import { Link } from "@solidjs/router";
 
+const config = require("../../config.json");
+
 export const Register: Component = () => {
-  const register = (event) => {
-    const {email, password} = event.target
-  }
+  const register = (event:any /* For now :any until i figures it out */ ) => {
+    const { email, password } = event.target;
+
+    if (!email || !password) return alert("Passord & Email cannot be empty!");
+  };
   return (
     <>
       <main class="register">
@@ -15,8 +19,12 @@ export const Register: Component = () => {
           </div>
           <section>
             <form class="inputs">
-              <input placeholder="example@email.com" type="email" />
-              <input placeholder="••••••••••" type="password" />
+              <input
+                placeholder="example@email.com"
+                name="email"
+                type="email"
+              />
+              <input placeholder="••••••••••" name="password" type="password" />
               <small>
                 <Link href="/login">Already have an account?</Link>
               </small>
