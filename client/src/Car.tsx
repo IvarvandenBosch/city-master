@@ -75,5 +75,13 @@ export default function Car() {
     }));
   });
 
-  return <div class="car" ref={carRef} style={style()}></div>;
+  return (<>
+      <div class="car" ref={carRef} style={style()}>
+        <div class="top"></div>
+        <div class="right"></div>
+        <div class="bottom" ></div>
+        <div class="left"></div>
+      </div>
+    </>
+  );
 }

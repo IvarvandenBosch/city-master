@@ -16,10 +16,57 @@ main {
 }
 .field {
   position: relative;
+  overflow: hidden;
 }
 .car {
   z-index: 10;
   transform-style: preserve-3d;
+  pointer-events: none;
+}
+
+.car .top {
+  position: absolute;
+  top: 200px;
+  width: 2000px;
+  height: 1000px;
+  left: 50%;
+  transform: translate(-50%);
+  cursor: not-allowed;
+  pointer-events: all;
+}
+
+.car .right {
+  position: absolute;
+  left: 200px;
+  width: 1000px;
+  height: 2000px;
+  top: 50%;
+  transform: translate(0, -50%);
+  cursor: not-allowed;
+  pointer-events: all;
+}
+
+.car .bottom {
+  position: absolute;
+  bottom: 200px;
+  width: 1000px;
+  height: 2000px;
+  right: 50%;
+  transform: translate(50%);
+  cursor: not-allowed;
+  pointer-events: all;
+}
+
+.car .left {
+  position: absolute;
+  right: 200px;
+  width: 1000px;
+  height: 2000px;
+  bottom: 50%;
+  transform: translate(0,50%);
+  cursor: not-allowed;
+  overflow: hidden;
+  pointer-events: all;
 }
 
 .car::before {
@@ -31,7 +78,20 @@ main {
   background-color: #000000a4;
   filter: blur(10px);
   height: 20px;
-  left: 5px;
+  left: 5px; 
+}
+
+.car::after {
+  content: "";
+  position: absolute;
+  top: -170px;
+  bottom: -170px;
+  left: -150px;
+  right: -150px;
+  pointer-events: none;
+  cursor: pointer;
+  background-color: #00aaff2f;
+  filter: blur(10px);
 }
 
 .rows {
