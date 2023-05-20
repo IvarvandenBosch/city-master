@@ -1,6 +1,6 @@
 // Car.tsx
 
-import { createSignal, onCleanup, createEffect } from "solid-js";
+import { createSignal, onCleanup, createEffect, onMount } from "solid-js";
 
 interface CarStyle {
   [key: string]: string | number;
@@ -19,7 +19,7 @@ export default function Car() {
     transition: "top 0.1s, left 0.1s, rotate 0.2s ease",
   });
   const [carRef, setCarRef] = createSignal<any>();
-
+  
   // Add event listeners for keydown and update the position accordingly
   createEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -51,37 +51,10 @@ export default function Car() {
       }
     };
 
-    checkCarIntersection();
     window.addEventListener("keydown", handleKeyDown);
     onCleanup(() => window.removeEventListener("keydown", handleKeyDown));
   });
 
-  const checkCarIntersection = () => {
-    const parentDivs = ["road-h", "road-Ld", "road-Ulr", "road-fourway"];
-    const carDiv = carRef();
-
-    if (carDiv) {
-      const carRect = carDiv.getBoundingClientRect();
-
-      parentDivs.forEach((className) => {
-        const parentDiv = document.querySelector(`.${className}`);
-
-        if (parentDiv) {
-          const parentRect = parentDiv.getBoundingClientRect();
-
-          if (
-            carRect.top < parentRect.bottom &&
-            carRect.bottom > parentRect.top &&
-            carRect.left < parentRect.right &&
-            carRect.right > parentRect.left
-          ) {
-            setSpeed((originalSpeed) => originalSpeed / 2);
-            console.log("not on road");
-          }
-        }
-      });
-    }
-  };
 
   // Update the style signal when the position changes
   createEffect(() => {
@@ -102,5 +75,5 @@ export default function Car() {
     }));
   });
 
-  return <div class="car" ref={setCarRef} style={style()}></div>;
+  return <div class="car" ref={carRef} style={style()}></div>;
 }
