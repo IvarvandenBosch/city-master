@@ -1,7 +1,6 @@
 import { Component, createSignal } from "solid-js";
 import { Link } from "@solidjs/router";
 
-const config = require("../../config.json");
 
 export const Register: Component = () => {
   const register = (event:any /* For now :any until i figures it out */ ) => {
