@@ -138,7 +138,7 @@ export default function Car(props: { volume: number; }) {
           setSpeed(10)
         }
       } else {
-        if (leftTrail().length % 2 === 0 && leftTrail() != 0 ) {
+        if (leftTrail().length % 2 === 0 && leftTrail().length != 0 ) {
           updateLeftTrail()
           updateRightTrail()
         }
