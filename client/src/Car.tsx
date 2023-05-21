@@ -9,8 +9,6 @@ interface CarStyle {
 export default function Car(props: { volume: number; }) {
   const [direction, setDirection] = createSignal("right");
   const [speed, setSpeed] = createSignal(10);
-  const [leftTrail, setLeftTrail] = createSignal<any[]>([]);
-  const [rightTrail, setRightTrail] = createSignal<any[]>([]);
 
   const [position, setPosition] = createSignal({ x: 0, y: 0 });
   const [style, setStyle] = createSignal<CarStyle>({
@@ -64,50 +62,7 @@ export default function Car(props: { volume: number; }) {
     window.addEventListener("keydown", handleKeyDown);
     onCleanup(() => window.removeEventListener("keydown", handleKeyDown));
   });
-  
-  const updateLeftTrail = () => {
-    if (direction() === "right") {
-      let newPos = {...position()}
-      newPos.y += 10
-      setLeftTrail((prevTrail) => [...prevTrail, newPos])
-    } else if (direction() === "down") {
-      let newPos = {...position()}
-      newPos.x += 27
-      setLeftTrail((prevTrail) => [...prevTrail, newPos])
-    } else if (direction() === "left") {
-      let newPos = {...position()}
-      newPos.x += 27
-      newPos.y += 18
-      setLeftTrail((prevTrail) => [...prevTrail, newPos])
-    } else if (direction() === "up") {
-      let newPos = {...position()}
-      newPos.x += 17
-      newPos.y += 27
-      setLeftTrail((prevTrail) => [...prevTrail, newPos])
-    }
-  };
 
-  const updateRightTrail = () => {
-    if (direction() === "right") {
-      let newPos = {...position()}
-      newPos.y += 20
-      setRightTrail((prevTrail) => [...prevTrail, newPos])
-    } else if (direction() === "down") {
-      let newPos = {...position()}
-      newPos.x += 17
-      setRightTrail((prevTrail) => [...prevTrail, newPos])
-    } else if (direction() === "left") {
-      let newPos = {...position()}
-      newPos.x += 20
-      newPos.y += 7
-      setRightTrail((prevTrail) => [...prevTrail, newPos])
-    } else if (direction() === "up") {
-      let newPos = {...position()}
-      newPos.x += 30
-      newPos.y += 30
-      setRightTrail((prevTrail) => [...prevTrail, newPos])
-    }
-  };
 
   function playCantDoThat() {
     const sound = new Audio("../GameAudio/wrong.mp3");
@@ -138,10 +93,6 @@ export default function Car(props: { volume: number; }) {
           setSpeed(10)
         }
       } else {
-        if (leftTrail().length % 2 === 0 && leftTrail().length != 0 ) {
-          updateLeftTrail()
-          updateRightTrail()
-        }
         if (speed() !== 1) {
           console.log("Not overlapping with speed of 1")
           setSpeed(1)
@@ -188,19 +139,6 @@ export default function Car(props: { volume: number; }) {
           : 270 + "deg",
     }));
   });
-
-  createEffect(() => {
-    setInterval(() => {
-      // Reduce Left Trail length
-      let newLeftTrail = [...leftTrail()]
-      newLeftTrail.shift()
-      setLeftTrail(newLeftTrail)
-      // Reduce Right Trail length
-      let newRightTrail = [...rightTrail()]
-      newRightTrail.shift()
-      setRightTrail(newRightTrail)
-    }, 30)
-  })
     
   return (
     <>
@@ -210,32 +148,6 @@ export default function Car(props: { volume: number; }) {
         <div class="bottom" onClick={playCantDoThat}></div>
         <div class="left" onClick={playCantDoThat}></div>
       </div>
-      {leftTrail().map((trailPosition, index) => (
-        <div
-          key={index}
-          className="trail"
-          style={{
-            top: trailPosition.y + "px",
-            left: trailPosition.x + "px",
-            width: 5 * (index / 100) > 5 ? 5 + "px" : 5 * (index / 100) + "px",
-            height: 5 * (index / 100) > 5 ? 5 + "px" : 5 * (index / 100) + "px",
-            opacity: (index / 100) / 2 
-          }}
-        />
-      ))}
-      {rightTrail().map((trailPosition, index) => (
-        <div
-          key={index}
-          className="trail"
-          style={{
-            top: trailPosition.y + "px",
-            left: trailPosition.x + "px",
-            width: 5 * (index / 100) > 5 ? 5 + "px" : 5 * (index / 100) + "px",
-            height: 5 * (index / 100) > 5 ? 5 + "px" : 5 * (index / 100) + "px",
-            opacity: (index / 100) / 2 
-          }}
-        />
-      ))}
     </>
   );
 }
