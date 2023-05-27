@@ -298,7 +298,7 @@ export const PlayingField: Component<playingFieldT> = (props) => {
     score = Math.max(score, 10);
 
     // Product of score * 0.5 to the power of how many broken materials there are.
-    score = score * 0.5 ** brokenMats;
+    score = score * 0.5 ** brokenMatsCount;
     score = Math.round(score);
     return score;
   }
