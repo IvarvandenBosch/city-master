@@ -5,7 +5,7 @@
   font-family: sans-serif;
 }
 :root {
-  --button-color: rgb(132, 0, 255);
+  --button-color: #8400ff;
   --hover-color: rgb(99, 0, 192);
   --background-color: rgba(181, 102, 255, 0.377);
 }
@@ -194,93 +194,86 @@ button {
   cursor: pointer;
 }
 
-.login,
-.register {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+.nav {
+  background-color: #fff !important;
 }
 
-.login,
-.register div {
-  background-color: #ffffff;
-  padding: 40px;
-  border: 1px solid #dadce0;
-  border-radius: 5px;
-  max-width: 500px;
+.eye {
+  position: absolute;
+  right: 10px;
+  top: 20px;
+  cursor: pointer;
+}
+.password-input {
+  position: relative;
+  display: flex;
+}
+
+.w-full, .MuiFormControl-root {
   width: 100%;
 }
 
 .login,
-.register h2 {
-  text-align: center;
-  font-size: 30px;
-  margin-bottom: 30px;
-}
-
-.login,
-.register section {
-  margin-bottom: 30px;
-}
-
-.login,
-.register .title {
-  font-size: 1.4rem;
-  font-weight: 600;
-}
-.login,
-.register .text {
-  text-align: center;
-  border: 0;
-  padding-bottom: 20px;
-  padding-top: 0;
-}
-.login,
-.register .inputs {
+.register {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  overflow: none;
+  width: 500px;
+  padding: 20px;
+  border: 1px solid rgba(128, 128, 128, 0.219);
+  border-radius: .2rem;
+  gap: 1rem;
+  position: relative;
 }
 
-.login,
-.register input {
-  padding: 15px;
-  font-size: 20px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  color: #242424;
-}
-.login,
-.registersmall {
-  text-decoration: underline;
-  cursor: pointer;
-  columns: var(--button-color);
+.login {
+  padding-top: 30px;
 }
 
-.login,
-.registerbutton {
-  padding: 10px 20px;
-  font-size: 20px;
-  background-color: var(--button-color);
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 100ms ease-in-out;
+
+.loader {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  overflow: hidden;
+  top: 0;
+}
+.login .text-center,
+.register .text-center {
+  text-align: center;
+}
+.google-login {
+  display: flex;
+  gap: 10px;
 }
 
-.login,
-.registerbutton:hover {
-  transition: background-color 100ms ease-in-out;
-  background-color: var(--hover-color);
+.login small,
+.register small {
+  color: var(--button-color);
 }
 
-.login,
-.registerhr {
-  border: none;
-  border-top: 1px solid #ccc;
-  margin-bottom: 30px;
+
+.container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;  
+  width: 100dvw;  
+  height: 100vh;  
+  height: 100dvh;  
+}
+
+.google-login { 
+  display: flex;
+  gap: 10px;
+}
+
+
+.trail {
+  background-color: #5a3e00;
+
+  position: absolute;
+  z-index: 9;
 }
 
 @keyframes loadingAnimation {

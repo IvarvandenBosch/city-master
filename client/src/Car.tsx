@@ -9,6 +9,7 @@ interface CarStyle {
 export default function Car(props: { volume: number }) {
   const [direction, setDirection] = createSignal("right");
   const [speed, setSpeed] = createSignal(10);
+
   const [position, setPosition] = createSignal({ x: 0, y: 0 });
   const [style, setStyle] = createSignal<CarStyle>({
     position: "absolute",
@@ -31,6 +32,7 @@ export default function Car(props: { volume: number }) {
         if (position().y - speed() >= 2) {
           checkOverlap();
           setPosition((prevPos) => ({ ...prevPos, y: prevPos.y - speed() }));
+
           setDirection("up");
         }
       } else if (key === "ArrowDown" || key === "s") {

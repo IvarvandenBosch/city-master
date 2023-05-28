@@ -1,50 +1,42 @@
-import { Component, createSignal } from "solid-js";
 import { Link } from "@solidjs/router";
-import { ScreenShake } from "../utils/ScreenShake";
+import { Component, createSignal } from "solid-js";
+import Input from "../components/Input";
+import { Alert, Backdrop, Button, Divider } from "@suid/material";
+import LinearLoader from "../components/LinearLoader";
+import GoogleSvg from "../components/GoogleSvg";
+import PassInput from "../components/passInput";
 
 export const Register: Component = () => {
-  const register = async (event: any /* For now :any until i figures it out */) => {
-    event.preventDefault();
-
-    const config =  await (await fetch("../../config.json")).json()
-    console.log(config)
-    const { email, password } = event.target;
-    const response = await fetch(`${config.api}/oauth2/password/register`, {
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({email,password}),
-      method:"POST",
-      mode:"cors"
-    })
-    const json = await response.json()
-    console.log(json);
-    if (!email || !password) return alert("Passord & Email cannot be empty!");
-  };
+  const [loading, setLoading] = createSignal(false);
   return (
-    <>
-      <main class="register">
-        <div>
-          <div class="text">
-            <p class="title">Register</p>
-            <p>Create an account</p>
+    <main class="container">
+      <form class="register">
+        <Backdrop sx={{ color: "#fff", zIndex: 10000 }} open={loading()} />
+        {loading() && (
+          <div class="loader">
+            <LinearLoader />
           </div>
-          <section>
-            <form class="inputs" onSubmit={register}>
-              <input
-                placeholder="example@email.com"
-                name="email"
-                type="email"
-              />
-              <input placeholder="••••••••••" name="password" type="password" />
-              <small>
-                <Link href="/login">Already have an account?</Link>
-              </small>
-              <button type="submit">Register</button>
-            </form>
-            <hr />
-            <button class="google">Register with Google</button>
-          </section>
-        </div>
-      </main>
-    </>
+        )}
+        <div class="padding-top"></div>
+
+        <section class="text-center">
+          <h2>Register</h2>
+          <p>Create an account</p>
+        </section>
+        <Input placeholder="Citymaster01" type="text" label="Username" />
+        <Input placeholder="example@mail.com" type="email" label="E-mail" />
+        <PassInput placeholder="●●●●●●●●●●●" label="Password" />
+        <Link href="/login">
+          <small>Already have an account?</small>
+        </Link>
+        <Button variant="outlined" type="submit">
+          Submit
+        </Button>
+        <Divider />
+        <Button class="google-login">
+          <GoogleSvg width="20px" height="20px" /> Sign in with Google
+        </Button>
+      </form>
+    </main>
   );
 };
