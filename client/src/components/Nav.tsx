@@ -11,21 +11,22 @@ import {
 export default function BasicAppBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="sticky" class="nav">
         <Toolbar>
           <IconButton
             size="large"
             edge="start"
-            color="inherit"
+            color="secondary"
             aria-label="menu"
             sx={{ mr: 2 }}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
+          <Typography variant="h6" component="div" color="secondary" sx={{ flexGrow: 1 }}>
+            
+            City Master
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button color="primary">Login</Button>
         </Toolbar>
       </AppBar>
     </Box>

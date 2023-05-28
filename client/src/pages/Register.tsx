@@ -1,9 +1,8 @@
 import { Link } from "@solidjs/router";
 import { Component, createSignal } from "solid-js";
 import Input from "../components/Input";
-import { Backdrop, Button, Divider } from "@suid/material";
+import { Alert, Backdrop, Button, Divider } from "@suid/material";
 import LinearLoader from "../components/LinearLoader";
-import { FaBrandsGoogle } from "solid-icons/fa";
 import GoogleSvg from "../components/GoogleSvg";
 import PassInput from "../components/passInput";
 
@@ -11,7 +10,6 @@ export const Register: Component = () => {
   const [loading, setLoading] = createSignal(false)
   return (
     <main class="container">
-
     <form class="register">
       <Backdrop 
         sx={{ color: "#fff", zIndex: 10000 }}
