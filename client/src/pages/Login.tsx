@@ -1,29 +1,32 @@
 import { Link } from "@solidjs/router";
 import { Component, createSignal } from "solid-js";
+import Input from "../components/Input";
+import { Backdrop, Button, Divider } from "@suid/material";
+import LinearLoader from "../components/LinearLoader";
+import { FaBrandsGoogle } from "solid-icons/fa";
+import GoogleSvg from "../components/GoogleSvg";
 
 export const Login: Component = () => {
+  const [loading, setLoading] = createSignal(false)
   return (
-    <>
-      <main class="login">
-        <div>
-          <div class="text">
-            <p class="title">Login</p>
-            <p>Log in to your account</p>
-          </div>
-          <section>
-            <form class="inputs">
-              <input placeholder="example@email.com" type="email" />
-              <input placeholder="••••••••••" type="password" />
-              <small>
-                <Link href="/">Forgot your password?</Link>
-              </small>
-              <button>Log in</button>
-            </form>
-            <hr />
-            <button class="google">Log in with Google</button>
-          </section>
-        </div>
-      </main>
-    </>
+    <main class="container">
+    <form class="login">
+      <Backdrop 
+        sx={{ color: "#fff", zIndex: 10000 }}
+        open={loading()} 
+        />
+      {loading() && <div class="loader"><LinearLoader/></div>}
+      <section class="text-center">
+        <h2>Login</h2>
+        <p>Log in to an existing account</p>
+      </section>
+      <Input placeholder="example@mail.com" type="email" label="E-mail"/>
+      <Input placeholder="●●●●●●●●●●●" type="password" label="Password"/>
+      <Link href="/forgot"><small>Forgot password?</small></Link>
+      <Button variant="outlined" type="submit">Submit</Button>
+      <Divider/>
+      <Button class="google-login"><GoogleSvg width="20px" height="20px" /> Sign in with Google</Button>
+    </form>
+    </main>
   );
 };

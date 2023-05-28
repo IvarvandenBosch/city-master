@@ -6,7 +6,7 @@
 }
 
 :root {
-  --button-color: rgb(132, 0, 255);
+  --button-color: #8400ff;
   --hover-color: rgb(99, 0, 192);
   --background-color: rgba(181, 102, 255, 0.377);
 }
@@ -195,94 +195,76 @@ button {
   cursor: pointer;
 }
 
-.login,
-.register {
+.eye {
+  position: absolute;
+  right: 10px;
+  top: 20px;
+  cursor: pointer;
+}
+.password-input {
+  position: relative;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
 }
 
-.login div,
-.register div {
-  background-color: #ffffff;
-  padding: 40px;
-  border: 1px solid #dadce0;
-  border-radius: 5px;
-  max-width: 500px;
+.w-full, .MuiFormControl-root {
   width: 100%;
 }
 
-.login h2,
-.register h2 {
-  text-align: center;
-  font-size: 30px;
-  margin-bottom: 30px;
-}
-
-.login section,
-.register section {
-  margin-bottom: 30px;
-}
-
-.login .title,
-.register .title {
-  font-size: 1.4rem;
-  font-weight: 600;
-}
-.login .text,
-.register .text {
-  text-align: center;
-  border: 0;
-  padding-bottom: 20px;
-  padding-top: 0;
-}
-.login .inputs,
-.register .inputs {
+.login,
+.register {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  overflow: none;
+  width: 500px;
+  padding: 20px;
+  border: 1px solid rgba(128, 128, 128, 0.219);
+  border-radius: .2rem;
+  gap: 1rem;
+  position: relative;
 }
 
-.login input,
-.register input {
-  padding: 15px;
-  font-size: 20px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  color: #242424;
+.login {
+  padding-top: 30px;
 }
+
+
+.loader {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  overflow: hidden;
+  top: 0;
+}
+.login .text-center,
+.register .text-center {
+  text-align: center;
+}
+.google-login {
+  display: flex;
+  gap: 10px;
+}
+
 .login small,
-.registersmall {
-  text-decoration: underline;
-  cursor: pointer;
-  columns: var(--button-color);
+.register small {
+  color: var(--button-color);
 }
 
-.login button,
-.registerbutton {
-  padding: 10px 20px;
-  font-size: 20px;
-  background-color: var(--button-color);
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 100ms ease-in-out;
+
+.container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;  
+  width: 100dvw;  
+  height: 100vh;  
+  height: 100dvh;  
 }
 
-.login button:hover,
-.registerbutton:hover {
-  transition: background-color 100ms ease-in-out;
-  background-color: var(--hover-color);
+.google-login { 
+  display: flex;
+  gap: 10px;
 }
 
-.login button,
-.registerhr {
-  border: none;
-  border-top: 1px solid #ccc;
-  margin-bottom: 30px;
-}
 
 .trail {
   background-color: #5a3e00;

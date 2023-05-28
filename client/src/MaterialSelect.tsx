@@ -2,7 +2,6 @@ import { Component, createSignal } from "solid-js";
 import { UserInterface } from "./UserInterface";
 
 type matSelectT = {
-  matsExpanded: Boolean;
   selectedMaterial: Function;
   setSelectedMaterial: Function;
   score: number;
@@ -30,7 +29,6 @@ export const MaterialSelect: Component<matSelectT> = (props) => {
   return (
     <aside
       class="material-list"
-      style={{ display: props.matsExpanded ? "block" : "none" }}
     >
       <h1>Materials</h1>
       <h3>
