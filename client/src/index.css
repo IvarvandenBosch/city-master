@@ -4,7 +4,6 @@
   padding: 0;
   font-family: sans-serif;
 }
-
 :root {
   --button-color: rgb(132, 0, 255);
   --hover-color: rgb(99, 0, 192);
@@ -63,7 +62,7 @@ main {
   width: 1000px;
   height: 2000px;
   bottom: 50%;
-  transform: translate(0,50%);
+  transform: translate(0, 50%);
   cursor: not-allowed;
   overflow: hidden;
   pointer-events: all;
@@ -78,7 +77,7 @@ main {
   background-color: #000000a4;
   filter: blur(10px);
   height: 20px;
-  left: 5px; 
+  left: 5px;
 }
 
 .show-range::after {
