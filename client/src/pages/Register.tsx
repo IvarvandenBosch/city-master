@@ -5,6 +5,7 @@ import { Backdrop, Button, Divider } from "@suid/material";
 import LinearLoader from "../components/LinearLoader";
 import { FaBrandsGoogle } from "solid-icons/fa";
 import GoogleSvg from "../components/GoogleSvg";
+import PassInput from "../components/passInput";
 
 export const Register: Component = () => {
   const [loading, setLoading] = createSignal(false)
@@ -25,7 +26,7 @@ export const Register: Component = () => {
       </section>
       <Input placeholder="Citymaster01" type="text" label="Username"/>
       <Input placeholder="example@mail.com" type="email" label="E-mail"/>
-      <Input placeholder="●●●●●●●●●●●" type="password" label="Password"/>
+      <PassInput placeholder="●●●●●●●●●●●" label="Password"/>
       <Link href="/login"><small>Already have an account?</small></Link>
       <Button variant="outlined" type="submit">Submit</Button>
       <Divider/>
