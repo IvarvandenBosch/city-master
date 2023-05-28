@@ -4,6 +4,7 @@ const UserSchema: any = new Schema({
   gid: String,
   email: String,
   password: String,
+  username: String,
   // Other stuff here soon... Probably game related. Maybe have diffrent documents??
 });
 

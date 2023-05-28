@@ -5,7 +5,7 @@ import User from "../models/User";
 import { findOneOrCreate } from "./mongoose";
 import fs from "fs";
 /* @ts-ignore */
-import { Strategy as LocalStrategy } from "passport-local";
+import { Strategy as CustomStrategy } from "passport-custom";
 import argon2 from "argon2";
 /**
  * This plugins adds some utilities to handle formbodys
@@ -49,25 +49,47 @@ export default fp(async (fastify) => {
     )
   );
   fastifyPassport.use(
-    new LocalStrategy(async function verify(
-      username: string,
-      password: string,
+    "custom",
+    new CustomStrategy(async function verify(
+      req: {
+        body: {
+          password: string;
+          email: string;
+          username: string;
+        };
+      },
       cb: Function
     ) {
-      let user = await User.findOne({
-        email: username,
-      });
+      let user =
+        (await await User.findOne({
+          email: req.body.email,
+        })) ??
+        (await await User.findOne({
+          username: req.body.username,
+        }));
 
-      if (user && !argon2.verify(user.password, password)) {
-        cb({
-          error: "Passwords do not match.",
-        });
+      if (user && !(await argon2.verify(user.password, req.body.password))) {
+        cb(
+          {
+            error: "Passwords do not match.",
+          },
+          null
+        );
       }
 
+      if (!req.body.password || !req.body.username || !req.body.email) {
+        cb(
+          {
+            error: "Missing fields",
+          },
+          null
+        );
+      }
       if (!user) {
         user = await User.create({
-          email: username,
-          password: await argon2.hash(password),
+          email: req.body.email,
+          username: req.body.username,
+          password: await argon2.hash(req.body.password),
         });
       }
 

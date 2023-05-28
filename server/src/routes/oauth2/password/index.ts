@@ -5,19 +5,23 @@ const root: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
   fastify.post(
     "/register",
     {
-      preHandler: fastifyPassport.authenticate("local", {}),
+      preHandler: fastifyPassport.authenticate("custom", {}),
     },
     async function (request, reply) {
-      console.log(request.user);
+      return {
+        message: "Successfully registered",
+      };
     }
   );
   fastify.post(
     "/login",
     {
-      preHandler: fastifyPassport.authenticate("local", {}),
+      preHandler: fastifyPassport.authenticate("custom", {}),
     },
     async function (request, reply) {
-      console.log(request.user);
+      return {
+        message: "Successfully registered",
+      };
     }
   );
 };
