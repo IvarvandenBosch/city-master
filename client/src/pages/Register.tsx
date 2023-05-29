@@ -5,13 +5,14 @@ import { Alert, Backdrop, Button, Divider } from "@suid/material";
 import LinearLoader from "../components/LinearLoader";
 import GoogleSvg from "../components/GoogleSvg";
 import PassInput from "../components/PassInput";
+import toast, { Toaster } from "solid-toast";
 
 export const Register: Component = () => {
   const [loading, setLoading] = createSignal(false);
 
   const Register = async ({ target: { email, username, password } }: any) => {
     if (!email.value || !username.value || !email.value) {
-      return alert("Please fill in all fields"); // Make this a toaster alert
+      return toast.error("Please fill in all the fields!"); // Make this a toaster alert
     }
     // HANDLING NEEDED
     const response = await fetch(
@@ -34,6 +35,7 @@ export const Register: Component = () => {
   };
   return (
     <main class="container">
+      <Toaster />
       <form
         class="register"
         onSubmit={(event: any) => {

@@ -6,13 +6,14 @@ import LinearLoader from "../components/LinearLoader";
 import { FaBrandsGoogle } from "solid-icons/fa";
 import GoogleSvg from "../components/GoogleSvg";
 import PassInput from "../components/PassInput";
+import toast, { Toaster } from "solid-toast";
 
 export const Login: Component = () => {
   const [loading, setLoading] = createSignal(false);
 
   const Login = async ({ target: { email, password } }: any) => {
-    if (!email.value || !email.value) {
-      return alert("Please fill in all fields"); // Make this a toaster alert
+    if (!email.value || !password.value) {
+      return toast.error("Please fill in all the fields!");
     }
     // HANDLING NEEDED
     const response = await fetch(
@@ -34,6 +35,7 @@ export const Login: Component = () => {
   };
   return (
     <main class="container">
+      <Toaster />
       <form
         class="login"
         onSubmit={(event: any) => {

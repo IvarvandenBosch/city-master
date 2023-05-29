@@ -1,3 +1,4 @@
+import { Link } from "@solidjs/router";
 import MenuIcon from "@suid/icons-material/Menu";
 import {
   AppBar,
@@ -26,7 +27,7 @@ export default function BasicAppBar() {
             
             City Master
           </Typography>
-          <Button color="primary">Login</Button>
+          <Link href="/login"><Button color="primary">Login</Button></Link>
         </Toolbar>
       </AppBar>
     </Box>
