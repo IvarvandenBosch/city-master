@@ -13,7 +13,7 @@ export const Game: Component = () => {
   const [volume, setVolume] = createSignal<number>(40);
 
   return (
-    <Layout score={score()}>
+    <Layout score={score()} noFooter={true}>
       <main class={styles.App}>
         <PlayingField
           score={score()}

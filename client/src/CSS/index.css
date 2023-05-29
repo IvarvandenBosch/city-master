@@ -156,6 +156,14 @@ hr {
   cursor: pointer;
 }
 
+.grid {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  font-weight: bold;
+  font-size: 20px;
+}
+
 .ui {
   display: flex;
   justify-content: space-evenly;
@@ -165,10 +173,10 @@ hr {
 .material-list {
   background-color: #fff;
   padding: 10px;
-  position: fixed;
+  position: absolute;
   height: min-content;
   align-items: start;
-  top: 60px;
+  top: 40px;
   right: 0;
 }
 

@@ -53,11 +53,16 @@ export const PlayingField: Component<playingFieldT> = (props) => {
       }
     }
 
+    var date = new Date;
+    var seconds = date.getSeconds();
+    var minutes = date.getMinutes();
+    var hour = date.getHours();
+
     if (!row && !col && value) {
       if (key === "add") {
-        newDisplayList.push(`+${value}`);
+        newDisplayList.push(`+${value} [${hour}:${minutes}:${JSON.stringify(seconds).length < 2 ? "0" + seconds : seconds}]`);
       } else if (key === "subtract") {
-        newDisplayList.push(`-${value}`);
+        newDisplayList.push(`-${value} [${hour}:${minutes}:${seconds}]`);
       }
     }
 
@@ -368,8 +373,8 @@ export const PlayingField: Component<playingFieldT> = (props) => {
   }, []);
 
   return (
-    <div class="display-list">
-      <div class="grid">
+    <>
+    <div class="grid">
         {displayList().map((el) => {
           if (el.startsWith("-")) {
             return <p style={{ color: "red" }}>{el}</p>;
@@ -378,35 +383,37 @@ export const PlayingField: Component<playingFieldT> = (props) => {
           }
         })}
       </div>
-      <div class="field">
-        <Car volume={props.volume} />
-        {fieldGrid().map((rows: any, rowIdx: number) => {
-          return (
-            <>
-              <div class="rows">
-                {rows.map((cols: any, colIdx: number) => {
-                  return (
-                    <div
-                      style={{
-                        rotate: cols.rotation + "deg",
-                      }}
-                      ref={colRef}
-                      onClick={(event) => fieldMutation(rowIdx, colIdx, event)}
-                      class={
-                        "cols" +
-                        " " +
-                        `${cols.name}` +
-                        " " +
-                        `${cols.broken ? "broken" : ""}`
-                      }
-                    ></div>
-                  );
-                })}
-              </div>
-            </>
-          );
-        })}
+      <div class="display-list">
+        <div class="field">
+          <Car volume={props.volume} />
+          {fieldGrid().map((rows: any, rowIdx: number) => {
+            return (
+              <>
+                <div class="rows">
+                  {rows.map((cols: any, colIdx: number) => {
+                    return (
+                      <div
+                        style={{
+                          rotate: cols.rotation + "deg",
+                        }}
+                        ref={colRef}
+                        onClick={(event) => fieldMutation(rowIdx, colIdx, event)}
+                        class={
+                          "cols" +
+                          " " +
+                          `${cols.name}` +
+                          " " +
+                          `${cols.broken ? "broken" : ""}`
+                        }
+                      ></div>
+                      );
+                    })}
+                </div>
+              </>
+            );
+          })}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
