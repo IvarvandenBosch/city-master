@@ -1,5 +1,6 @@
 import { Component } from "solid-js";
 import { FaSolidArrowRotateRight } from "solid-icons/fa";
+import "./CSS/Slider.module.css";
 
 type userInterfaceT = {
   selectedMaterial: Function;
@@ -54,8 +55,9 @@ export const UserInterface: Component<userInterfaceT> = (props) => {
           <FaSolidArrowRotateRight />
         </button>
       </section>
-      <section>
-        <p>Volume ({props.volume})</p>
+      <section class="volume-container">
+        <p>Volume</p>
+        <p class="vol-value">{props.volume}</p>
         <input
           type="range"
           value={props.volume}

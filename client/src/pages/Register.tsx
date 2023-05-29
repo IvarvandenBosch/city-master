@@ -6,6 +6,7 @@ import LinearLoader from "../components/LinearLoader";
 import GoogleSvg from "../components/GoogleSvg";
 import PassInput from "../components/PassInput";
 import toast, { Toaster } from "solid-toast";
+import Layout from "../layout";
 
 export const Register: Component = () => {
   const [loading, setLoading] = createSignal(false);
@@ -34,57 +35,59 @@ export const Register: Component = () => {
     console.log(response);
   };
   return (
-    <main class="container">
-      <Toaster />
-      <form
-        class="register"
-        onSubmit={(event: any) => {
-          event.preventDefault();
-          Register(event);
-        }}
-      >
-        <Backdrop sx={{ color: "#fff", zIndex: 10000 }} open={loading()} />
-        {loading() && (
-          <div class="loader">
-            <LinearLoader />
-          </div>
-        )}
-        <div class="padding-top"></div>
-        <section class="text-center">
-          <h2>Register</h2>
-          <p>Create an account</p>
-        </section>
-        <Input
-          placeholder="Citymaster01"
-          type="text"
-          label="Username"
-          name="username"
-        />
-        <Input
-          placeholder="example@mail.com"
-          type="email"
-          label="E-mail"
-          name="email"
-        />
-        <PassInput placeholder="●●●●●●●●●●●" label="Password" name="password" />
-        <Link href="/login">
-          <small>Already have an account?</small>
-        </Link>
-        <Button variant="outlined" type="submit">
-          Submit
-        </Button>
-        <Divider />
-        <Button
-          class="google-login"
-          onClick={() => {
-            window.location.href = `${
-              import.meta.env.VITE_API
-            }/oauth2/google/login`;
+    <Layout>
+      <main class="container">
+        <Toaster />
+        <form
+          class="register"
+          onSubmit={(event: any) => {
+            event.preventDefault();
+            Register(event);
           }}
-        >
-          <GoogleSvg width="20px" height="20px" /> Sign in with Google
-        </Button>
-      </form>
-    </main>
+          >
+          <Backdrop sx={{ color: "#fff", zIndex: 10000 }} open={loading()} />
+          {loading() && (
+            <div class="loader">
+              <LinearLoader />
+            </div>
+          )}
+          <div class="padding-top"></div>
+          <section class="text-center">
+            <h2>Register</h2>
+            <p>Create an account</p>
+          </section>
+          <Input
+            placeholder="Citymaster01"
+            type="text"
+            label="Username"
+            name="username"
+          />
+          <Input
+            placeholder="example@mail.com"
+            type="email"
+            label="E-mail"
+            name="email"
+          />
+          <PassInput placeholder="●●●●●●●●●●●" label="Password" name="password" />
+          <Link href="/login">
+            <small>Already have an account?</small>
+          </Link>
+          <Button variant="outlined" type="submit">
+            Submit
+          </Button>
+          <Divider />
+          <Button
+            class="google-login"
+            onClick={() => {
+              window.location.href = `${
+                import.meta.env.VITE_API
+              }/oauth2/google/login`;
+            }}
+            >
+            <GoogleSvg width="20px" height="20px" /> Sign in with Google
+          </Button>
+        </form>
+      </main>
+    </Layout>
   );
 };

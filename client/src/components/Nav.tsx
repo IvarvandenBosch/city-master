@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@suid/material";
 
-export default function BasicAppBar() {
+export default function Nav(props: {score?: number}) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="sticky" class="nav">
@@ -24,9 +24,12 @@ export default function BasicAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" color="secondary" sx={{ flexGrow: 1 }}>
-            
             City Master
           </Typography>
+         {props.score !== undefined && (
+          <Typography variant="h6" component="div" color="secondary" sx={{ flexGrow: 1 }}>
+            Score: {props.score}
+          </Typography>)}
           <Link href="/login"><Button color="primary">Login</Button></Link>
         </Toolbar>
       </AppBar>

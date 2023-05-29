@@ -115,10 +115,10 @@ export const PlayingField: Component<playingFieldT> = (props) => {
       );
       addToDisplay(row, col, "subtract", undefined);
     } else {
-        const sound = new Audio("../GameAudio/wrong.mp3");
-        sound.volume = props.volume / 100;
-        sound.play();
-        return
+      const sound = new Audio("../GameAudio/wrong.mp3");
+      sound.volume = props.volume / 100;
+      sound.play();
+      return;
     }
 
     findSurroundings(newGrid, col, row);
@@ -294,8 +294,9 @@ export const PlayingField: Component<playingFieldT> = (props) => {
     );
 
     let score = 100 - (deviationScore * 100) / amountOfMats;
-    score = Math.min(score, 100);
+    score = Math.min(score, 200);
     score = Math.max(score, 10);
+    score = score * 2;
 
     // Product of score * 0.5 to the power of how many broken materials there are.
     score = score * 0.5 ** brokenMatsCount;
@@ -378,7 +379,7 @@ export const PlayingField: Component<playingFieldT> = (props) => {
         })}
       </div>
       <div class="field">
-        <Car volume={props.volume}/>
+        <Car volume={props.volume} />
         {fieldGrid().map((rows: any, rowIdx: number) => {
           return (
             <>

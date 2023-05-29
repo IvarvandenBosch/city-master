@@ -4,7 +4,6 @@ import { Game } from "./pages/Index";
 import { Register } from "./pages/Register";
 import { Login } from "./pages/Login";
 import { Home } from "./pages/Home";
-import { purple } from "@suid/material/colors";
 import { createTheme, ThemeProvider } from "@suid/material/styles";
 
 

@@ -4,6 +4,10 @@
   padding: 0;
   font-family: sans-serif;
 }
+
+body {
+  overflow-x: hidden;
+}
 :root {
   --button-color: #8400ff;
   --hover-color: rgb(99, 0, 192);
@@ -12,6 +16,7 @@
 
 main {
   display: flex;
+  position: relative;
 }
 .field {
   position: relative;
@@ -158,16 +163,31 @@ hr {
 }
 
 .material-list {
-  background-color: var(--background-color);
+  background-color: #fff;
   padding: 10px;
-  position: sticky;
+  position: fixed;
   height: 100vh;
   align-items: start;
-  top: 0;
+  top: 60px;
+  right: 0;
 }
 
 .material-list h3 {
   text-transform: capitalize;
+}
+
+.volume-container {
+  position: relative;
+}
+
+.vol-value {
+  font-weight: bold;
+  position: absolute;
+  z-index: 20;
+  top: 19px;
+  right: 50%;
+  color: #fff;
+  pointer-events: none;
 }
 
 .selected {
@@ -194,6 +214,11 @@ button {
   cursor: pointer;
 }
 
+.margin-block {
+  margin-block: 20px !important;
+  opacity: 1;
+}
+
 .nav {
   background-color: #fff !important;
 }
@@ -209,7 +234,8 @@ button {
   display: flex;
 }
 
-.w-full, .MuiFormControl-root {
+.w-full,
+.MuiFormControl-root {
   width: 100%;
 }
 
@@ -221,7 +247,7 @@ button {
   width: 500px;
   padding: 20px;
   border: 1px solid rgba(128, 128, 128, 0.219);
-  border-radius: .2rem;
+  border-radius: 0.2rem;
   gap: 1rem;
   position: relative;
 }
@@ -229,7 +255,6 @@ button {
 .login {
   padding-top: 30px;
 }
-
 
 .loader {
   position: absolute;
@@ -252,22 +277,20 @@ button {
   color: var(--button-color);
 }
 
-
-.container{
+.container {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100vw;  
-  width: 100dvw;  
-  height: 100vh;  
-  height: 100dvh;  
+  width: 100vw;
+  width: 100dvw;
+  height: 100vh;
+  height: 100dvh;
 }
 
-.google-login { 
+.google-login {
   display: flex;
   gap: 10px;
 }
-
 
 .trail {
   background-color: #5a3e00;
@@ -275,6 +298,19 @@ button {
   position: absolute;
   z-index: 9;
 }
+
+footer {
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  padding-block: 20px;
+  background-color: var(--background-color);
+}
+
+footer span {
+  font-weight: bold;
+}
+
 
 @keyframes loadingAnimation {
   0% {

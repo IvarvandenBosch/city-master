@@ -7,6 +7,7 @@ import { FaBrandsGoogle } from "solid-icons/fa";
 import GoogleSvg from "../components/GoogleSvg";
 import PassInput from "../components/PassInput";
 import toast, { Toaster } from "solid-toast";
+import Layout from "../layout";
 
 export const Login: Component = () => {
   const [loading, setLoading] = createSignal(false);
@@ -34,43 +35,45 @@ export const Login: Component = () => {
     console.log(response);
   };
   return (
-    <main class="container">
-      <Toaster />
-      <form
-        class="login"
-        onSubmit={(event: any) => {
-          event.preventDefault();
-          Login(event);
-        }}
-      >
-        <Backdrop sx={{ color: "#fff", zIndex: 10000 }} open={loading()} />
-        {loading() && (
-          <div class="loader">
-            <LinearLoader />
-          </div>
-        )}
-        <section class="text-center">
-          <h2>Login</h2>
-          <p>Log in to an existing account</p>
-        </section>
-        <Input
-          placeholder="example@mail.com"
-          type="email"
-          label="E-mail"
-          name="email"
-        />
-        <PassInput placeholder="●●●●●●●●●●●" label="Password" name="password" />
-        <Link href="/forgot">
-          <small>Forgot password?</small>
-        </Link>
-        <Button variant="outlined" type="submit">
-          Submit
-        </Button>
-        <Divider />
-        <Button class="google-login">
-          <GoogleSvg width="20px" height="20px" /> Sign in with Google
-        </Button>
-      </form>
-    </main>
+    <Layout>
+      <main class="container">
+        <Toaster />
+        <form
+          class="login"
+          onSubmit={(event: any) => {
+            event.preventDefault();
+            Login(event);
+          }}
+        >
+          <Backdrop sx={{ color: "#fff", zIndex: 10000 }} open={loading()} />
+          {loading() && (
+            <div class="loader">
+              <LinearLoader />
+            </div>
+          )}
+          <section class="text-center">
+            <h2>Login</h2>
+            <p>Log in to an existing account</p>
+          </section>
+          <Input
+            placeholder="example@mail.com"
+            type="email"
+            label="E-mail"
+            name="email"
+          />
+          <PassInput placeholder="●●●●●●●●●●●" label="Password" name="password" />
+          <Link href="/forgot">
+            <small>Forgot password?</small>
+          </Link>
+          <Button variant="outlined" type="submit">
+            Submit
+          </Button>
+          <Divider />
+          <Button class="google-login">
+            <GoogleSvg width="20px" height="20px" />Sign in with Google
+          </Button>
+        </form>
+      </main>
+    </Layout>
   );
 };

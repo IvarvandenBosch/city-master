@@ -1,5 +1,6 @@
 import { Component, createSignal } from "solid-js";
 import { UserInterface } from "./UserInterface";
+import { Button, Divider } from "@suid/material";
 
 type matSelectT = {
   selectedMaterial: Function;
@@ -27,9 +28,7 @@ export const MaterialSelect: Component<matSelectT> = (props) => {
   ];
 
   return (
-    <aside
-      class="material-list"
-    >
+    <aside class="material-list">
       <h1>Materials</h1>
       <h3>
         {props.selectedMaterial()?.name.split("-")[0] ??
@@ -66,14 +65,15 @@ export const MaterialSelect: Component<matSelectT> = (props) => {
           );
         })}
       </div>
-      <button
+      <Button
         class="reset"
+        variant="contained"
         onClick={() => props.setSelectedMaterial(undefined)}
       >
         Clear
-      </button>
+      </Button>
 
-      <hr />
+      <Divider class="margin-block" />
 
       <UserInterface
         score={props.score}

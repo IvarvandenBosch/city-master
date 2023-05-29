@@ -1,8 +1,9 @@
 import { Component, createSignal } from "solid-js";
 import { PlayingField } from "../PlayingField";
+import Layout from '../layout'
 
 // styling
-import styles from "../App.module.css";
+import styles from "../CSS/App.module.css";
 import { MaterialSelect } from "../MaterialSelect";
 import { UserInterface } from "../UserInterface";
 
@@ -12,15 +13,7 @@ export const Game: Component = () => {
   const [volume, setVolume] = createSignal<number>(40);
 
   return (
-    <>
-      <nav>
-        Score: {score()}{" "}
-        <button
-          class="navbtn"
-        >
-          test
-        </button>
-      </nav>
+    <Layout score={score()}>
       <main class={styles.App}>
         <PlayingField
           score={score()}
@@ -38,6 +31,6 @@ export const Game: Component = () => {
           setVolume={setVolume}
         />
       </main>
-    </>
+    </Layout>
   );
 };
