@@ -6,7 +6,7 @@ import LinearLoader from "../components/LinearLoader";
 import GoogleSvg from "../components/GoogleSvg";
 import PassInput from "../components/PassInput";
 import toast, { Toaster } from "solid-toast";
-import Layout from "../layout";
+import Layout from "../Layout";
 
 export const Register: Component = () => {
   const [loading, setLoading] = createSignal(false);

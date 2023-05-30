@@ -1,5 +1,7 @@
 import { Component, createSignal, createEffect } from "solid-js";
 import Car from "./Car";
+import toast from "solid-toast";
+import { Toaster } from "solid-toast";
 
 type playingFieldT = {
   selectedMaterial: Function;
@@ -15,7 +17,7 @@ export const PlayingField: Component<playingFieldT> = (props) => {
     cols: 25,
   };
 
-  const grassObject = { name: "grass", price: 10, rotation: 0, broken: false };
+  const grassObject = { name: "grass", price: 10, rotation: 0, broken: false, loading: false };
   const [fieldGrid, setFieldGrid] = createSignal(
     Array.from({ length: gridSize.rows }, () =>
       Array.from({ length: gridSize.cols }, () => grassObject)
@@ -84,15 +86,19 @@ export const PlayingField: Component<playingFieldT> = (props) => {
 
     if (newGrid[row][col].broken) {
       if (inProgress()) {
-        alert("You can only remove one broken piece at a time.");
+        toast.error("You can only remove one broken piece at a time.");
       } else {
-        event.target.classList.add("loading");
+        newGrid[row][col].loading = true
+        setFieldGrid([...newGrid]);
         setInProgress(true);
 
         const timeout = setTimeout(() => {
           // Remove loading animation after 5 seconds
-          event.target.classList.remove("loading");
+          newGrid[row][col].loading = false
           newGrid[row][col].broken = false;
+          setFieldGrid([...newGrid]);
+          
+          // Add 30 reward score
           props.setScore((prevScore: number) => prevScore + 30);
           addToDisplay(undefined, undefined, "add", 30);
           event.target.classList.remove("broken");
@@ -374,6 +380,7 @@ export const PlayingField: Component<playingFieldT> = (props) => {
 
   return (
     <>
+    <Toaster />
     <div class="grid">
         {displayList().map((el) => {
           if (el.startsWith("-")) {
@@ -403,7 +410,9 @@ export const PlayingField: Component<playingFieldT> = (props) => {
                           " " +
                           `${cols.name}` +
                           " " +
-                          `${cols.broken ? "broken" : ""}`
+                          `${cols.broken ? "broken" : ""}` +
+                          " " +
+                          `${cols.loading ? "loading" : ""}`
                         }
                       ></div>
                       );

@@ -24,7 +24,9 @@ export default function Nav(props: {score?: number}) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" color="secondary" sx={{ flexGrow: 1 }}>
-            City Master
+            <Typography class="logo" onClick={() => window.location.href= "/"} variant="h6" component="div" color="secondary" sx={{ flexGrow: 1 }}>
+              City Master
+            </Typography>
           </Typography>
          {props.score !== undefined && (
           <Typography variant="h6" component="div" color="secondary" sx={{ flexGrow: 1 }}>

@@ -1,6 +1,6 @@
 import { Component, createSignal } from "solid-js";
 import { PlayingField } from "../PlayingField";
-import Layout from '../layout'
+import Layout from '../Layout'
 
 // styling
 import styles from "../CSS/App.module.css";

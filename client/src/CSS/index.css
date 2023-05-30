@@ -319,7 +319,6 @@ footer span {
   font-weight: bold;
 }
 
-
 @keyframes loadingAnimation {
   0% {
     width: 0;
@@ -436,6 +435,37 @@ footer span {
 }
 .broken.water {
   background-image: url(../GameAssets/polluted-water.png);
+}
+
+.broken::after {
+  content: "!";
+  position: absolute;
+  top: -20px;
+  font-size: 30px;
+  left: calc(50% - 5px);
+  font-size: 24px;
+  font-weight: bolder;
+  text-shadow: -1px -1px 0px yellow, 1px 1px 0px yellow, -1px 1px 0px yellow, 1px -1px 0px yellow;
+  color: red;
+  animation: hover 0.5s infinite;
+  pointer-events: none;
+}
+
+.logo {
+  cursor:pointer;
+  width: max-content;
+}
+
+@keyframes hover {
+  0% {
+    transform: translateY(10px);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+  100% {
+    transform: translateY(10px);
+  }
 }
 
 /* More assets later to be implemented */

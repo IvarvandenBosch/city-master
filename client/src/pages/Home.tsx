@@ -1,6 +1,6 @@
 import { Component } from "solid-js"
 import Nav from '../components/Nav'
-import Layout from "../layout"
+import Layout from "../Layout"
 
 export const Home: Component = () => { 
     return (

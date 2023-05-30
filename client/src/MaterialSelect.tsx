@@ -13,18 +13,18 @@ type matSelectT = {
 
 export const MaterialSelect: Component<matSelectT> = (props) => {
   const materials = [
-    { name: "grass", price: 10, rotation: 0, broken: false },
-    { name: "tree", price: 50, rotation: 0, broken: false },
-    { name: "house-1", price: 500, rotation: 0, broken: false },
-    { name: "house-2", price: 500, rotation: 0, broken: false },
-    { name: "house-3", price: 500, rotation: 0, broken: false },
-    { name: "shop", price: 1000, rotation: 0, broken: false },
-    { name: "water", price: 10, rotation: 0, broken: false },
-    { name: "road-h", price: 100, rotation: 0, broken: false },
-    { name: "road-Ld", price: 100, rotation: 0, broken: false },
-    { name: "road-Ulr", price: 100, rotation: 0, broken: false },
-    { name: "road-fourway", price: 100, rotation: 0, broken: false },
-    { name: "sand", price: 10, rotation: 0, broken: false },
+    { name: "grass", price: 10, rotation: 0, broken: false, loading: false },
+    { name: "tree", price: 50, rotation: 0, broken: false, loading: false },
+    { name: "house-1", price: 500, rotation: 0, broken: false, loading: false },
+    { name: "house-2", price: 500, rotation: 0, broken: false, loading: false },
+    { name: "house-3", price: 500, rotation: 0, broken: false, loading: false },
+    { name: "shop", price: 1000, rotation: 0, broken: false, loading: false },
+    { name: "water", price: 10, rotation: 0, broken: false, loading: false },
+    { name: "road-h", price: 100, rotation: 0, broken: false, loading: false },
+    { name: "road-Ld", price: 100, rotation: 0, broken: false, loading: false },
+    { name: "road-Ulr", price: 100, rotation: 0, broken: false, loading: false },
+    { name: "road-fourway", price: 100, rotation: 0, broken: false, loading: false },
+    { name: "sand", price: 10, rotation: 0, broken: false, loading: false },
   ];
 
   return (
