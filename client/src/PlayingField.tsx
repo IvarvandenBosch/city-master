@@ -40,6 +40,7 @@ export const PlayingField: Component<playingFieldT> = (props) => {
     false
   );
 
+
   function addToDisplay(
     row: number | undefined,
     col: number | undefined,

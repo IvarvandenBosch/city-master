@@ -68,6 +68,7 @@ export const MaterialSelect: Component<matSelectT> = (props) => {
       <Button
         class="reset"
         variant="contained"
+        title="press 'c'"
         onClick={() => props.setSelectedMaterial(undefined)}
       >
         Clear

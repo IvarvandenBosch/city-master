@@ -16,6 +16,10 @@ export const UserInterface: Component<userInterfaceT> = (props) => {
     if (event.key === "r") {
       rotate();
     }
+
+    if (event.key === "c" && props.score != undefined) {
+      props.setSelectedMaterial(undefined)
+    }
   });
 
   function rotate() {

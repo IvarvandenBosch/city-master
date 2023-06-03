@@ -3,7 +3,6 @@ import { PlayingField } from "../PlayingField";
 import Layout from '../Layout'
 
 // styling
-import styles from "../CSS/App.module.css";
 import { MaterialSelect } from "../MaterialSelect";
 import { UserInterface } from "../UserInterface";
 
@@ -14,7 +13,7 @@ export const Game: Component = () => {
 
   return (
     <Layout score={score()} noFooter={true}>
-      <main class={styles.App}>
+      <main>
         <PlayingField
           score={score()}
           setScore={setScore}
