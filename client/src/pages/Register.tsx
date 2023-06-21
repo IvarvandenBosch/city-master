@@ -13,13 +13,14 @@ export const Register: Component = () => {
 
   const Register = async ({ target: { email, username, password } }: any) => {
     if (!email.value || !username.value || !email.value) {
-      return toast.error("Please fill in all the fields!"); // Make this a toaster alert
+      return toast.error("Please fill in all the fields!");
     }
-    // HANDLING NEEDED
+    setLoading(true);
     const response = await fetch(
       `${import.meta.env.VITE_API}/oauth2/password/register`,
       {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -30,9 +31,16 @@ export const Register: Component = () => {
         }),
         mode: "cors",
       }
-    );
-
-    console.log(response);
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        setLoading(false);
+        if (res.error) return toast.error(res.message);
+        toast.success(res.message);
+        setTimeout(() => {
+          // window.location.href = "/profile";
+        }, 2000);
+      });
   };
   return (
     <Layout>
@@ -44,7 +52,7 @@ export const Register: Component = () => {
             event.preventDefault();
             Register(event);
           }}
-          >
+        >
           <Backdrop sx={{ color: "#fff", zIndex: 10000 }} open={loading()} />
           {loading() && (
             <div class="loader">
@@ -68,7 +76,11 @@ export const Register: Component = () => {
             label="E-mail"
             name="email"
           />
-          <PassInput placeholder="●●●●●●●●●●●" label="Password" name="password" />
+          <PassInput
+            placeholder="●●●●●●●●●●●"
+            label="Password"
+            name="password"
+          />
           <Link href="/login">
             <small>Already have an account?</small>
           </Link>
@@ -77,14 +89,21 @@ export const Register: Component = () => {
           </Button>
           <Divider />
           <Button
-            class="google-login"
             onClick={() => {
-              window.location.href = `${
-                import.meta.env.VITE_API
-              }/oauth2/google/login`;
+              setLoading(true);
             }}
+          >
+            <a
+              class="google-login"
+              href={`${import.meta.env.VITE_API}/oauth2/google/login`}
+              style={{
+                color: "black",
+                "text-decoration": "none",
+              }}
             >
-            <GoogleSvg width="20px" height="20px" /> Sign in with Google
+              <GoogleSvg width="20px" height="20px" />
+              Sign in with Google
+            </a>
           </Button>
         </form>
       </main>

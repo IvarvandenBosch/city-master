@@ -50,7 +50,7 @@ export default fp(async (fastify) => {
   );
   fastifyPassport.use(
     "custom",
-    new CustomStrategy(async function verify(
+    new CustomStrategy(async function (
       req: {
         body: {
           password: string;
@@ -60,6 +60,15 @@ export default fp(async (fastify) => {
       },
       cb: Function
     ) {
+      console.log("Using custom strategy....");
+      if (!(req.body.password && (req.body.email || req.body.username))) {
+        cb(
+          {
+            error: "Missing fields",
+          },
+          null
+        );
+      }
       let user =
         (await await User.findOne({
           email: req.body.email,
@@ -77,14 +86,6 @@ export default fp(async (fastify) => {
         );
       }
 
-      if (!req.body.password || !req.body.username || !req.body.email) {
-        cb(
-          {
-            error: "Missing fields",
-          },
-          null
-        );
-      }
       if (!user) {
         user = await User.create({
           email: req.body.email,
@@ -92,17 +93,23 @@ export default fp(async (fastify) => {
           password: await argon2.hash(req.body.password),
         });
       }
-
       cb(null, user);
     })
   );
 
-  fastifyPassport.registerUserDeserializer(async (user, req) => {
-    return user;
+  fastifyPassport.registerUserDeserializer(async (email: string, req) => {
+    if (!email) return;
+    const _user = await User.findOne({
+      email,
+    });
+    console.log("Deserializing user... ", _user, email);
+
+    return _user;
   });
 
   fastifyPassport.registerUserSerializer(async (user: any, request) => {
-    return user;
+    console.log("Serializing user...", user, user.email);
+    return user.email;
   });
 });
 

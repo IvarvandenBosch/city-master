@@ -10,6 +10,8 @@ import About from "../components/page/About";
 import PageCar from "../components/page/PageCar";
 
 export const Home: Component = () => {
+
+  
   return (
     <Layout>
       <main class="home">

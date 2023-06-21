@@ -16,24 +16,35 @@ export const Login: Component = () => {
     if (!email.value || !password.value) {
       return toast.error("Please fill in all the fields!");
     }
-    // HANDLING NEEDED
+    setLoading(true);
     const response = await fetch(
-      `${import.meta.env.VITE_API}/oauth2/password/register`,
+      `${import.meta.env.VITE_API}/oauth2/password/login`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({
           email: email.value,
           password: password.value,
         }),
         mode: "cors",
       }
-    );
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        setLoading(false);
+        if (res.error) return toast.error(res.message);
+        toast.success(res.message);
+        setTimeout(() => {
+          //window.location.href = "/profile";
+        }, 2000);
+      });
 
     console.log(response);
   };
+
   return (
     <Layout>
       <main class="container">
@@ -61,7 +72,11 @@ export const Login: Component = () => {
             label="E-mail"
             name="email"
           />
-          <PassInput placeholder="●●●●●●●●●●●" label="Password" name="password" />
+          <PassInput
+            placeholder="●●●●●●●●●●●"
+            label="Password"
+            name="password"
+          />
           <Link href="/forgot">
             <small>Forgot password?</small>
           </Link>
@@ -69,8 +84,22 @@ export const Login: Component = () => {
             Submit
           </Button>
           <Divider />
-          <Button class="google-login">
-            <GoogleSvg width="20px" height="20px" />Sign in with Google
+          <Button
+            onClick={() => {
+              setLoading(true);
+            }}
+          >
+            <a
+              class="google-login"
+              href={`${import.meta.env.VITE_API}/oauth2/google/login`}
+              style={{
+                color: "black",
+                "text-decoration": "none",
+              }}
+            >
+              <GoogleSvg width="20px" height="20px" />
+              Sign in with Google
+            </a>
           </Button>
         </form>
       </main>

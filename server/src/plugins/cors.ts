@@ -11,5 +11,6 @@ export default fp<FastifyCorsOptions>(async (fastify) => {
     origin: (_origin: any, cb: any) => {
       cb(null, true);
     },
+    credentials: true,
   });
 });
