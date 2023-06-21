@@ -1,6 +1,6 @@
-import { Button, Divider } from "@suid/material";
+import { Button, CircularProgress, Divider } from "@suid/material";
 import { FaSolidCircleArrowLeft, FaSolidCircleArrowRight, FaSolidFileCircleCheck } from "solid-icons/fa";
-import { createSignal } from "solid-js";
+import { Suspense, createSignal } from "solid-js";
 
 export default function Tutorial() {
 const [done, setDone] = createSignal(false);
@@ -64,7 +64,9 @@ const [done, setDone] = createSignal(false);
                   <div class="gradient2"></div>
                   <h4>{el.title}</h4>
                   <p>{el.instructions}</p>
-                  <img src={`../MainAssets/${el.src}.png`} alt={el.src} />
+                  <Suspense fallback={<CircularProgress  />}>
+                    <img src={`../MainAssets/${el.src}.png`} alt={el.src} />
+                  </Suspense>
                   <Divider />
                   <div class="for-back-btns">
                     <Button

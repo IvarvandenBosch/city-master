@@ -4,12 +4,23 @@ import {
   AppBar,
   Box,
   Button,
+  Drawer,
   IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
   Toolbar,
   Typography,
+  Divider,
 } from "@suid/material";
+import { FaBrandsGithub, FaSolidEnvelope, FaSolidUser } from "solid-icons/fa";
+import { createSignal } from "solid-js";
 
 export default function Nav(props: {score?: number}) {
+  const [openDrawer, setOpenDrawer] = createSignal(false)
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="sticky" class="nav">
@@ -20,6 +31,7 @@ export default function Nav(props: {score?: number}) {
             color="secondary"
             aria-label="menu"
             sx={{ mr: 2 }}
+            onClick={() => setOpenDrawer(true)}
           >
             <MenuIcon />
           </IconButton>
@@ -35,6 +47,44 @@ export default function Nav(props: {score?: number}) {
           <Link href="/login"><Button color="primary">Login</Button></Link>
         </Toolbar>
       </AppBar>
+        <>
+          <Drawer
+            anchor={"left"}
+            open={openDrawer()}
+            sx={{ zIndex: 9999 }}
+            onClose={() => setOpenDrawer(false)}
+          >
+            <List>
+              
+                <ListItem disablePadding>
+                  <ListItemButton style={{"padding-right": "100px"}} onClick={() => window.location.href = "https://github.com/IvarvandenBosch/city-master"}>
+                    <ListItemIcon>
+                      <FaBrandsGithub /> 
+                    </ListItemIcon>
+                    <ListItemText primary={"Github"} />
+                  </ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
+                    <a href="mailto:ivvdbosch@gmail.com">
+                  <ListItemButton style={{"padding-right": "100px", color: "#212121"}}>
+                      <ListItemIcon>
+                        <FaSolidEnvelope /> 
+                      </ListItemIcon>
+                      <ListItemText class="link" style={{"text-decoration": "none"}} primary={"Contact"} />
+                  </ListItemButton> 
+                  </a>
+                </ListItem>
+                <ListItem disablePadding>
+                  <ListItemButton style={{"padding-right": "100px"}}>
+                    <ListItemIcon>
+                      <FaSolidUser />
+                    </ListItemIcon>
+                    <ListItemText primary={"Account"} />
+                  </ListItemButton>
+                </ListItem>
+            </List>
+          </Drawer>
+        </>
     </Box>
   );
 }

@@ -7,13 +7,15 @@ import {
 } from "solid-icons/fa";
 import Tutorial from "../components/page/Tutorial";
 import About from "../components/page/About";
+import PageCar from "../components/page/PageCar";
 
 export const Home: Component = () => {
   return (
     <Layout>
       <main class="home">
         <section>
-          <div class="center">
+          <div class="center car-boundings">
+            <PageCar />
             <section>
               <h1>City Master</h1>
               <p>
@@ -22,7 +24,7 @@ export const Home: Component = () => {
               </p>
               <div class="buttongroup">
                 <Button variant="outlined">Tutorial</Button>
-                <Button variant="contained" class="play">
+                <Button variant="contained" class="play" onClick={() => location.href = "/game"}>
                   <FaSolidPlay />
                   Play
                 </Button>
