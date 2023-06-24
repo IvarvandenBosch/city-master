@@ -393,7 +393,7 @@ export const PlayingField: Component<playingFieldT> = (props) => {
       </div>
       <div class="display-list">
         <div class="field">
-          <Car volume={props.volume} />
+          <Car volume={props.volume} field={fieldGrid()} setField={setFieldGrid}/>
           {fieldGrid().map((rows: any, rowIdx: number) => {
             return (
               <>

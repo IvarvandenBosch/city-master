@@ -198,8 +198,6 @@ main {
   align-self: center;
 }
 
-
-
 .about {
   width: 100vw;
   width: 100dvw;
@@ -211,7 +209,7 @@ main {
   background-image: radial-gradient(#8400ff 0.75px, #ffffff 0.75px);
   background-size: 15px 15px;
   display: flex;
-  justify-content: center
+  justify-content: center;
 }
 
 .max-width {
@@ -289,7 +287,7 @@ main {
   right: -150px;
   pointer-events: none;
   cursor: pointer;
-  background-color: #00aaff2f;
+  background-color: #00aaff49;
   filter: blur(10px);
 }
 
@@ -523,11 +521,10 @@ footer span {
   }
 }
 
-
 @media (max-width: 500px) {
   .tut-switch {
     width: 100vw;
-  } 
+  }
   .tut-switch img {
     width: calc(100vw - 20px);
   }

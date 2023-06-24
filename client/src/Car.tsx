@@ -1,12 +1,17 @@
 // Car.tsx
 
 import { createSignal, onCleanup, createEffect, onMount } from "solid-js";
+import getIndexes from "./carLogic";
 
 interface CarStyle {
   [key: string]: string | number;
 }
 
-export default function Car(props: { volume: number }) {
+export default function Car(props: {
+  volume: number;
+  field: { name: string; broken: boolean; price: number; rotation: number }[][];
+  setField: Function;
+}) {
   const [direction, setDirection] = createSignal("right");
   const [speed, setSpeed] = createSignal(10);
 
@@ -21,39 +26,101 @@ export default function Car(props: { volume: number }) {
   });
   const [showRange, setShowRange] = createSignal<any>(false);
 
+  function handleKeyDown(event: { key: string }) {
+    if (event.key === "q") {
+      setShowRange(true);
+    }
+  }
+
+  function handleKeyUp(event: { key: string }) {
+    if (event.key === "q") {
+      setShowRange(false);
+    }
+  }
+
+  // Register keydown and keyup event listeners
+  document.addEventListener("keydown", handleKeyDown);
+  document.addEventListener("keyup", handleKeyUp);
+
+  // Cleanup event listeners when the component unmounts
+  onCleanup(() => {
+    document.removeEventListener("keydown", handleKeyDown);
+    document.removeEventListener("keyup", handleKeyUp);
+  });
+
   // Add event listeners for keydown and update the position accordingly
   createEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       const { key } = event;
 
-      // Update position based on the key pressed
-      if (key === "ArrowUp" || key === "w") {
-        event.preventDefault();
-        if (position().y - speed() >= 2) {
-          checkOverlap();
-          setPosition((prevPos) => ({ ...prevPos, y: prevPos.y - speed() }));
+      const allKeys = [
+        "ArrowUp",
+        "w",
+        "ArrowDown",
+        "s",
+        "ArrowLeft",
+        "a",
+        "ArrowRight",
+        "d",
+      ];
 
-          setDirection("up");
-        }
-      } else if (key === "ArrowDown" || key === "s") {
+      if (allKeys.includes(key)) {
         event.preventDefault();
-        if (position().y + speed() < 970) {
-          checkOverlap();
-          setPosition((prevPos) => ({ ...prevPos, y: prevPos.y + speed() }));
-          setDirection("down");
-        }
-      } else if (key === "ArrowLeft" || key === "a") {
-        if (position().x - speed() >= 0) {
-          checkOverlap();
-          setPosition((prevPos) => ({ ...prevPos, x: prevPos.x - speed() }));
-          setDirection("left");
-        }
-      } else if (key === "ArrowRight" || key === "d") {
-        if (position().x + speed() < 960) {
-          checkOverlap();
-          setPosition((prevPos) => ({ ...prevPos, x: prevPos.x + speed() }));
-          setDirection("right");
-        }
+      }
+
+      // Update position based on the key pressed
+      switch (key) {
+        case "ArrowUp":
+        case "w":
+          if (position().y - speed() >= 2) {
+            checkOverlap();
+            breakHouses();
+            setPosition((prevPos) => ({
+              ...prevPos,
+              y: prevPos.y - speed(),
+            }));
+            setDirection("up");
+          }
+          break;
+
+        case "ArrowDown":
+        case "s":
+          if (position().y + speed() < 970) {
+            checkOverlap();
+            breakHouses();
+            setPosition((prevPos) => ({
+              ...prevPos,
+              y: prevPos.y + speed(),
+            }));
+            setDirection("down");
+          }
+          break;
+
+        case "ArrowLeft":
+        case "a":
+          if (position().x - speed() >= 0) {
+            checkOverlap();
+            breakHouses();
+            setPosition((prevPos) => ({
+              ...prevPos,
+              x: prevPos.x - speed(),
+            }));
+            setDirection("left");
+          }
+          break;
+
+        case "ArrowRight":
+        case "d":
+          if (position().x + speed() < 960) {
+            checkOverlap();
+            breakHouses();
+            setPosition((prevPos) => ({
+              ...prevPos,
+              x: prevPos.x + speed(),
+            }));
+            setDirection("right");
+          }
+          break;
       }
     };
 
@@ -66,6 +133,26 @@ export default function Car(props: { volume: number }) {
     sound.volume = props.volume / 100;
     sound.play();
     return;
+  }
+
+  function breakHouses() {
+    const indexes = getIndexes(direction(), position());
+    const fieldClone = structuredClone(props.field);
+
+    const housesList = ["house-1", "house-2", "house-3"];
+    let hasBroken = false;
+    indexes.forEach((indexes) => {
+      const { x, y } = indexes;
+      if (housesList.includes(fieldClone[y][x].name))
+        if (!fieldClone[y][x].broken) {
+          fieldClone[y][x].broken = true;
+          hasBroken = true;
+        }
+    });
+
+    if (hasBroken) {
+      props.setField(fieldClone);
+    }
   }
 
   function checkOverlap() {
@@ -87,16 +174,13 @@ export default function Car(props: { volume: number }) {
       if (overlappingElements.length > 0) {
         if (checkBrokenElement(overlappingElements)) {
           if (speed() !== 0.2) {
-            console.log("Overlapping with speed of .2");
             setSpeed(0.2);
           }
         } else if (speed() !== 10) {
-          console.log("Overlapping with speed of 10");
           setSpeed(10);
         }
       } else {
         if (speed() !== 1) {
-          console.log("Not overlapping with speed of 1");
           setSpeed(1);
         }
       }
